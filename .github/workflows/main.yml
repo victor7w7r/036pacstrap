@@ -1,0 +1,37 @@
+name: "main"
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+jobs:
+  compile:
+    name: Compile Pacstrap
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1.3
+        with:
+          sdk: 'stable'
+      - name: Build
+        run: |
+          mkdir dist
+          dart pub get
+          dart compile exe bin/pacstrap.dart -o pacstrap
+          mv pacstrap dist
+      - uses: actions/upload-artifact@v2
+        with:
+          name: bin-pacstrap
+          path: dist
+  release:
+    needs: compile
+    name: Release to Repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: bin-pacstrap
+          path: bin-pac
+      - uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: bin-*/*

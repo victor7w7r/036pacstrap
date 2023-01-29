@@ -1,0 +1,17 @@
+name: pacstrap
+description: 036pacstrap
+version: 1.0.0
+
+environment:
+  sdk: '>=2.19.0 <3.0.0'
+
+dependencies:
+  console: ^4.1.0
+  dcli: ^1.36.0
+  fpdart: ^0.4.0
+  get_it: ^7.2.0
+  internet_connection_checker: ^1.0.0+1
+  system_info2: ^2.0.4
+
+dev_dependencies:
+  lints: ^2.0.1
