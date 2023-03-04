@@ -12,8 +12,8 @@ void diskenv() {
 
   IO(Chooser<String>([lang(36), lang(37)], message: lang(33)).chooseSync)
     .map((sel) => sel == lang(36)
-      ? locator.get<App>().diskenv = "HDD"
-      : locator.get<App>().diskenv = "SSD"
+      ? locator.get<App>().diskenv = 'HDD'
+      : locator.get<App>().diskenv = 'SSD'
     )
     .run();
 

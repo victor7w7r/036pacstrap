@@ -12,7 +12,7 @@ Future<void> swapmenu() async {
 
   clear();
 
-  if(app.diskenv == "HDD") {
+  if(app.diskenv == 'HDD') {
 
     int count = 0;
     int countMount = 0;
@@ -30,7 +30,7 @@ Future<void> swapmenu() async {
 
     for(final part in verify) {
       if(part != locator.get<App>().efipart && part != locator.get<App>().rootpart) {
-        await sysout("lsblk $part | sed -ne '/\\//p'") != ""
+        await sysout("lsblk $part | sed -ne '/\\//p'") != ''
           ? countMount++
           : swapParts.add(part);
         count++;

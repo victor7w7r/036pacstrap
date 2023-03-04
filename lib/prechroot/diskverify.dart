@@ -9,7 +9,7 @@ Future<void> diskverify(String device) async {
 
   clear();
 
-  if(await sysout("blkid -o value -s PTTYPE $device") == "dos") {
+  if(await sysout('blkid -o value -s PTTYPE $device') == 'dos') {
     lang(12, PrintQuery.error);
     exit(1);
   }
@@ -17,32 +17,32 @@ Future<void> diskverify(String device) async {
   final efi = await sysout("fdisk -l $device | sed -ne '/EFI/p'");
   final efiorder = await sysout("echo $efi | sed -ne '/[[:alpha:]]1/p'");
 
-  if(efi == "") {
+  if(efi == '') {
     lang(15, PrintQuery.error);
     exit(1);
   }
 
-  if(efiorder == "") {
+  if(efiorder == '') {
     lang(16, PrintQuery.error);
     exit(1);
   }
 
   if(RegExp(r'sd[A-Za-z]').hasMatch(device)) {
     final rotational = await Task(() => sysout('echo $device | cut -d "/" -f3'))
-      .flatMap((block) => Task(() =>sysout("cat /sys/block/$block/queue/rotational")))
+      .flatMap((block) => Task(() => sysout('cat /sys/block/$block/queue/rotational')))
       .run();
 
-    if(diskenv == "SSD" && rotational == "1") {
+    if(diskenv == 'SSD' && rotational == '1') {
       lang(13, PrintQuery.error);
       exit(1);
     }
 
-    if(diskenv == "HDD" && rotational == "0") {
+    if(diskenv == 'HDD' && rotational == '0') {
       lang(14, PrintQuery.error);
       exit(1);
     }
   } else {
-    if(diskenv == "HDD") {
+    if(diskenv == 'HDD') {
       lang(14, PrintQuery.error);
       exit(1);
     }

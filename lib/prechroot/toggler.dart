@@ -7,12 +7,12 @@ Future<void> toggler() async {
   final app = locator.get<App>();
 
   clear();
-  print("=============== CHROOT =============== \n");
+  print('=============== CHROOT =============== \n');
 
-  await syscall("cp ${Directory.current.path}/pacstrap /mnt/pacstrap");
-  await syscall("chmod +x /mnt/pacstrap");
-  await codeproc("arch-chroot /mnt ./pacstrap chroot ${app.diskenv} ${app.english ? 1 : 0}");
+  await syscall('cp ${Directory.current.path}/pacstrap /mnt/pacstrap');
+  await syscall('chmod +x /mnt/pacstrap');
+  await codeproc('arch-chroot /mnt ./pacstrap chroot ${app.diskenv} ${app.english ? 1 : 0}');
 
   lang(24, PrintQuery.normal);
-  await syscall("rm -f /mnt/pacstrap &> /dev/null");
+  await syscall('rm -f /mnt/pacstrap &> /dev/null');
 }

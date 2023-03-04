@@ -30,7 +30,7 @@ Future<void> rootpartmenu() async {
 
   for(final part in verify) {
     if(part != efipart) {
-      if(await sysout("lsblk $part | sed -ne '/\\//p'") != "") {
+      if(await sysout("lsblk $part | sed -ne '/\\//p'") != '') {
         countMount++;
       } else {
         rootParts.add(part);

@@ -41,13 +41,13 @@ Future<String> diskmenu() async {
 
   for (final dev in dirtyDevs) {
     final abs = await _absoluteDev(dev);
-    abs == ""
+    abs == ''
       ? block.add(await _blockDev(dev))
       : {};
   }
 
   for(final part in block) {
-    array.add("/dev/$part");
+    array.add('/dev/$part');
   }
 
   print(cyan(lang(41)));

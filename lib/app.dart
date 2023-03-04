@@ -16,24 +16,24 @@ void setup() => GetIt.I.registerSingleton<App>(App());
 class App {
 
   bool english = false;
-  String diskenv = "";
-  String disk = "";
-  String efipart = "";
-  String rootpart = "";
-  String swappart = "";
+  String diskenv = '';
+  String disk = '';
+  String efipart = '';
+  String rootpart = '';
+  String swappart = '';
 
   bool xfce = false;
-  String sudouser = "";
+  String sudouser = '';
 
   Future<void> init(List<String> args) async {
 
     if(args.isEmpty) {
       clear();
-      print(green("Bienvenido / Welcome"));
-      print(cyan("Please, choose your language / Por favor selecciona tu idioma"));
+      print(green('Bienvenido / Welcome'));
+      print(cyan('Please, choose your language / Por favor selecciona tu idioma'));
 
       IO(Chooser<String>(['English', 'Espanol'], message: 'Number/Numero: ').chooseSync)
-        .map((selection) => selection == "English" ? english = true : english = false)
+        .map((selection) => selection == 'English' ? english = true : english = false)
         .run();
 
       clear();
@@ -44,7 +44,7 @@ class App {
       if(!Platform.isLinux) {
         clear();
         lang(0, PrintQuery.error);
-        print("\n");
+        print('\n');
         exit(1);
       }
 
@@ -52,7 +52,7 @@ class App {
         if(!val) {
           clear();
           lang(1, PrintQuery.error);
-          print("\n");
+          print('\n');
           exit(1);
         }
       });
@@ -60,22 +60,22 @@ class App {
       if(!(await Directory('/sys/firmware/efi').exists())) {
         clear();
         lang(2, PrintQuery.error);
-        print("\n");
+        print('\n');
         exit(1);
       }
 
-      if(SysInfo.kernelArchitecture != 'x86_64') {
+      if(SysInfo.kernelArchitecture.name != 'x86_64') {
         clear();
         lang(3, PrintQuery.error);
-        print("\n");
+        print('\n');
         exit(1);
       }
 
-      await verifycmd("pacman").then((val){
+      await verifycmd('pacman').then((val){
         if(!val) {
           clear();
           lang(4, PrintQuery.error);
-          print("\n");
+          print('\n');
           exit(1);
         }
       });
@@ -84,43 +84,43 @@ class App {
         if(!iin) {
           clear();
           lang(5, PrintQuery.error);
-          print("\n");
+          print('\n');
           exit(1);
         }
       });
 
       lang(6, PrintQuery.normal);
-      await syscall("pacman -Sy &> /dev/null");
+      await syscall('pacman -Sy &> /dev/null');
 
-      await verifycmd("fsck.f2fs").then((val) async {
+      await verifycmd('fsck.f2fs').then((val) async {
         if(!val) {
           lang(7, PrintQuery.normal);
-          await syscall("pacman -S f2fs-tools --noconfirm &> /dev/null");
+          await syscall('pacman -S f2fs-tools --noconfirm &> /dev/null');
         }
       });
 
-      await verifycmd("whiptail").then((val) async {
+      await verifycmd('whiptail').then((val) async {
         if(!val) {
           lang(8, PrintQuery.normal);
-          await syscall("pacman -S whiptail --noconfirm &> /dev/null");
+          await syscall('pacman -S whiptail --noconfirm &> /dev/null');
         }
       });
 
-      await verifycmd("pacstrap").then((val) async {
+      await verifycmd('pacstrap').then((val) async {
         if(!val) {
           lang(9, PrintQuery.normal);
-          await syscall("pacman -S arch-install-scripts --noconfirm &> /dev/null");
+          await syscall('pacman -S arch-install-scripts --noconfirm &> /dev/null');
         }
       });
 
-      await syscall("pacman -S ncurses wget --noconfirm &> /dev/null");
+      await syscall('pacman -S ncurses wget --noconfirm &> /dev/null');
 
       lang(10, PrintQuery.error);
 
       spinAction.cancel();
     } else {
       diskenv = args[1];
-      english = args[2] == "1";
+      english = args[2] == '1';
     }
   }
 
