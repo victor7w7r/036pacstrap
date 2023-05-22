@@ -1,52 +1,58 @@
-import 'dart:io';
+import 'dart:io' show exit;
 
 import 'package:fpdart/fpdart.dart';
-import 'package:pacstrap/index.dart';
 
-Future<void> diskverify(String device) async {
+import 'package:pacstrap/pacstrap.dart';
 
-  final diskenv = locator.get<App>().diskenv;
+Future<void> diskverify(
+  final String device
+) async {
 
   clear();
 
-  if(await sysout('blkid -o value -s PTTYPE $device') == 'dos') {
+  if(await sys('blkid -o value -s PTTYPE $device') == 'dos') {
     lang(12, PrintQuery.error);
     exit(1);
   }
 
-  final efi = await sysout("fdisk -l $device | sed -ne '/EFI/p'");
-  final efiorder = await sysout("echo $efi | sed -ne '/[[:alpha:]]1/p'");
+  final efi = await sys(
+    "fdisk -l $device | sed -ne '/EFI/p'"
+  );
 
   if(efi == '') {
     lang(15, PrintQuery.error);
     exit(1);
   }
 
-  if(efiorder == '') {
+  if(await sys("echo $efi | sed -ne '/[[:alpha:]]1/p'") == '') {
     lang(16, PrintQuery.error);
     exit(1);
   }
 
   if(RegExp(r'sd[A-Za-z]').hasMatch(device)) {
-    final rotational = await Task(() => sysout('echo $device | cut -d "/" -f3'))
-      .flatMap((block) => Task(() => sysout('cat /sys/block/$block/queue/rotational')))
+    final rotational = await Task(() =>
+      sys('echo $device | cut -d "/" -f3')
+    )
+      .flatMap((block) => Task(() =>
+        sys('cat /sys/block/$block/queue/rotational'))
+      )
       .run();
 
-    if(diskenv == 'SSD' && rotational == '1') {
+    if(diskenvdev == 'SSD' && rotational == '1') {
       lang(13, PrintQuery.error);
       exit(1);
     }
 
-    if(diskenv == 'HDD' && rotational == '0') {
+    if(diskenvdev == 'HDD' && rotational == '0') {
       lang(14, PrintQuery.error);
       exit(1);
     }
   } else {
-    if(diskenv == 'HDD') {
+    if(diskenvdev == 'HDD') {
       lang(14, PrintQuery.error);
       exit(1);
     }
   }
 
-  locator.get<App>().disk = device;
+  disk = device;
 }

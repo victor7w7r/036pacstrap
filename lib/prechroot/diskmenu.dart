@@ -1,38 +1,47 @@
 import 'dart:io' show exit;
 
-import 'package:console/console.dart' show Chooser;
 import 'package:dcli/dcli.dart' show cyan;
 
-import 'package:pacstrap/index.dart';
+import 'package:pacstrap/pacstrap.dart';
 
-Future<List<String>> _devs() =>
-  syssplit(r"find /dev/disk/by-path/ | sed 's/^\/dev\/disk\/by-path\///'");
+Future<List<String>> _devs() => syssplit(
+  'find /dev/disk/by-path/ '
+  r"| sed 's/^\/dev\/disk\/by-path\///'"
+);
 
-Future<String> _dirtyDev(String dev) =>
-  sysoutwline('readlink "/dev/disk/by-path/$dev"');
+Future<String> _dirtyDev(
+  final String dev
+) => syswline('readlink "/dev/disk/by-path/$dev"');
 
-Future<String> _absoluteDev(String dev) =>
-  sysout("echo $dev | sed 's/^\\.\\.\\/\\.\\.\\//\\/dev\\//' | sed '/.*[[:alpha:]]\$/d' | sed '/blk[[:digit:]]\$/d' | sed '/nvme[[:digit:]]n[[:digit:]]\$/d'");
+Future<String> _absoluteDev(
+  final String dev
+) => sys(
+  'echo $dev '
+  "| sed 's/^\\.\\.\\/\\.\\.\\//\\/dev\\//' "
+  "| sed '/.*[[:alpha:]]\$/d' | sed '/blk[[:digit:]]\$/d' "
+  "| sed '/nvme[[:digit:]]n[[:digit:]]\$/d'"
+);
 
-Future<String> _blockDev(String dev) =>
-  sysoutwline("echo $dev | sed 's/^\\.\\.\\/\\.\\.\\///'");
+Future<String> _blockDev(
+  final String dev
+) => syswline("echo $dev | sed 's/^\\.\\.\\/\\.\\.\\///'");
 
 Future<String> diskmenu() async {
 
   clear();
 
-  int count = 0;
+  var count = 0;
 
-  final block = <String>[];
-  final dirtyDevs = <String>[];
-  final array = <String>[];
+  final (block, dirtyDevs, array) = (
+    <String>[], <String>[], <String>[]
+  );
 
   for (final dev in await _devs()) {
     dirtyDevs.add(await _dirtyDev(dev));
     count++;
   }
 
-  dirtyDevs.removeWhere((e) => e == '');
+  dirtyDevs.removeWhere((dev) => dev == '');
 
   if(count == 0){
     lang(11, PrintQuery.normal);
@@ -40,8 +49,7 @@ Future<String> diskmenu() async {
   }
 
   for (final dev in dirtyDevs) {
-    final abs = await _absoluteDev(dev);
-    abs == ''
+    await _absoluteDev(dev) == ''
       ? block.add(await _blockDev(dev))
       : {};
   }
@@ -52,5 +60,5 @@ Future<String> diskmenu() async {
 
   print(cyan(lang(41)));
 
-  return Chooser<String>(array, message: lang(33)).chooseSync();
+  return chooser(lang(33), array).run();
 }

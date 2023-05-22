@@ -1,9 +1,9 @@
 import 'dart:io' show File, FileMode;
 
 import 'package:dcli/dcli.dart' show cyan;
-import 'package:console/console.dart' show Chooser, readInput;
+import 'package:console/console.dart' show readInput;
 
-import 'package:pacstrap/index.dart';
+import 'package:pacstrap/pacstrap.dart';
 
 Future<void> hostnamer() async {
 
@@ -11,8 +11,7 @@ Future<void> hostnamer() async {
 
   await readInput(lang(46)).then((ans){
     File('/etc/hostname').writeAsStringSync(
-      ans,
-      mode: FileMode.write
+      ans, mode: FileMode.write
     );
     File('/etc/hosts').writeAsStringSync(
       'echo 127.0.1.1 $ans',
@@ -26,27 +25,25 @@ Future<void> localer() async {
   clear();
 
   await dialog('036 Creative Studios', lang(47), '9', '50');
-  await syscall('ln -sf /usr/share/zoneinfo/America/Guayaquil /etc/localtime');
-  await syscall('hwclock --systohc');
+  await call('ln -sf /usr/share/zoneinfo/America/Guayaquil '
+    '/etc/localtime'
+  );
+  await call('hwclock --systohc');
 
   clear();
 
   print(cyan(lang(48)));
 
-  final sel = Chooser<String>(['es_ES', 'en_US'], message: lang(33)).chooseSync();
+  final sel = chooser(lang(33), ['es_ES', 'en_US']).run();
 
-  if(sel == 'es_ES') {
-    clear();
-    await syscall("sed -i 's/^#es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen &> /dev/null");
-    await codeproc('locale-gen');
-    File f3 = File('/etc/hostname');
-    f3.writeAsString('LANG="es_ES.UTF-8"\nLC_TIME="es_ES.UTF-8"\nLANGUAGE="es_EC:es_ES:es"\n', mode: FileMode.write);
-  } else  {
-    clear();
-    await syscall("sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen &> /dev/null");
-    await codeproc('locale-gen');
-    File f3 = File('/etc/hostname');
-    f3.writeAsString('LANG="en_US.UTF-8"\nLC_TIME="en_US.UTF-8"\nLANGUAGE="es_US:en"\n', mode: FileMode.write);
-  }
+  clear();
+  await call(
+    "sed -i 's/^#$sel.UTF-8 UTF-8/$sel.UTF-8 UTF-8/' /etc/locale.gen &> /dev/null"
+  );
+  await coderes('locale-gen');
+  File('/etc/hostname').writeAsString(
+    'LANG="$sel.UTF-8"\nLC_TIME="$sel.UTF-8"\nLANGUAGE="$sel:$sel:es"\n',
+    mode: FileMode.write
+  );
 
 }

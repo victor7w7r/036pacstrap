@@ -1,36 +1,36 @@
 import 'dart:io';
 
-import 'package:console/console.dart' show Chooser;
 import 'package:dcli/dcli.dart' show cyan;
-import 'package:fpdart/fpdart.dart' show IO;
 
-import 'package:pacstrap/index.dart';
+import 'package:pacstrap/pacstrap.dart';
 
 Future<void> swapmenu() async {
 
-  final app = locator.get<App>();
-
   clear();
 
-  if(app.diskenv == 'HDD') {
+  if(diskenvdev == 'HDD') {
 
-    int count = 0;
-    int countMount = 0;
+    var (count, countMount) = (0, 0);
 
-    List<String> verify = [];
-    List<String> swapParts = [];
+    final ( verify, swapParts ) = ( <String>[], <String>[] );
 
-    if(RegExp(r'sd[A-Za-z]').hasMatch(app.disk)){
-      verify = await syssplit("find ${app.disk}* | sed '/[[:alpha:]]\$/d'");
-    } else if(RegExp(r'mmcblk[0-9_-]').hasMatch(app.disk)) {
-      verify = await syssplit("find ${app.disk}* | sed '/k[[:digit:]]\$/d'");
-    } else if(RegExp(r'nvme[0-9_-]').hasMatch(app.disk)) {
-      verify = await syssplit("find ${app.disk}* | sed '/e[[:digit:]]\$/d'");
+    if(RegExp(r'sd[A-Za-z]').hasMatch(disk)){
+      verify.addAll(await syssplit(
+        "find $disk* | sed '/[[:alpha:]]\$/d'"
+      ));
+    } else if(RegExp(r'mmcblk[0-9_-]').hasMatch(disk)) {
+      verify.addAll(await syssplit(
+        "find $disk* | sed '/k[[:digit:]]\$/d'"
+      ));
+    } else if(RegExp(r'nvme[0-9_-]').hasMatch(disk)) {
+      verify.addAll(await syssplit(
+        "find $disk* | sed '/e[[:digit:]]\$/d'"
+      ));
     }
 
     for(final part in verify) {
-      if(part != locator.get<App>().efipart && part != locator.get<App>().rootpart) {
-        await sysout("lsblk $part | sed -ne '/\\//p'") != ''
+      if(part != efipart && part != rootpart) {
+        await sys("lsblk $part | sed -ne '/\\//p'") != ''
           ? countMount++
           : swapParts.add(part);
         count++;
@@ -45,8 +45,9 @@ Future<void> swapmenu() async {
 
     print(cyan(lang(43)));
 
-    IO(Chooser<String>(swapParts, message: lang(33)).chooseSync)
-      .map((sel) => locator.get<App>().swappart = sel)
+    chooser(lang(33), swapParts)
+      .map((sel) => swappart = sel)
       .run();
+
   }
 }

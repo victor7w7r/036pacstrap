@@ -1,40 +1,40 @@
 import 'dart:io' show exit;
 
-import 'package:console/console.dart' show Chooser;
 import 'package:dcli/dcli.dart' show cyan;
-import 'package:fpdart/fpdart.dart' show IO;
 
-import 'package:pacstrap/index.dart';
+import 'package:pacstrap/pacstrap.dart';
 
 Future<void> rootpartmenu() async {
 
-  final disk = locator.get<App>().disk;
-
   clear();
 
-  int count = 0;
-  int countMount = 0;
+  var ( count, countMount ) = ( 0, 0 );
 
-  final verify = <String>[];
-  final rootParts = <String>[];
+  final ( verify, rootParts ) = ( <String>[], <String>[] );
 
-  final efipart = await sysoutwline('fdisk -l $disk | sed -ne /EFI/p | cut -d " " -f1');
+  final efipartquery = await syswline(
+    'fdisk -l $disk | sed -ne /EFI/p | cut -d " " -f1'
+  );
 
   if(RegExp(r'sd[A-Za-z]').hasMatch(disk)) {
-    verify.addAll(await syssplit("find $disk* | sed '/[[:alpha:]]\$/d'"));
+    verify.addAll(await syssplit(
+      "find $disk* | sed '/[[:alpha:]]\$/d'"
+    ));
   } else if(RegExp(r'mmcblk[0-9_-]').hasMatch(disk)) {
-    verify.addAll(await syssplit("find $disk* | sed '/k[[:digit:]]\$/d'"));
+    verify.addAll(await syssplit(
+      "find $disk* | sed '/k[[:digit:]]\$/d'"
+    ));
   } else if(RegExp(r'nvme[0-9_-]').hasMatch(disk)) {
-    verify.addAll(await syssplit("find $disk* | sed '/e[[:digit:]]n[[:digit:]]\$/d'"));
+    verify.addAll(await syssplit(
+      "find $disk* | sed '/e[[:digit:]]n[[:digit:]]\$/d'"
+    ));
   }
 
   for(final part in verify) {
-    if(part != efipart) {
-      if(await sysout("lsblk $part | sed -ne '/\\//p'") != '') {
-        countMount++;
-      } else {
-        rootParts.add(part);
-      }
+    if(part != efipartquery) {
+      (await sys("lsblk $part | sed -ne '/\\//p'") != '')
+        ? countMount++
+        : rootParts.add(part);
       count++;
     }
   }
@@ -45,12 +45,12 @@ Future<void> rootpartmenu() async {
     exit(1);
   }
 
-  locator.get<App>().efipart = efipart;
+  efipart = efipartquery;
 
   print(cyan(lang(42)));
 
-  IO(Chooser<String>(rootParts, message: lang(33)).chooseSync)
-    .map((sel) => locator.get<App>().rootpart = sel)
+  chooser(lang(33), rootParts)
+    .map((sel) => rootpart = sel)
     .run();
 
 }

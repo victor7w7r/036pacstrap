@@ -1,6 +1,6 @@
 import 'dart:io' show stdin, stdout;
 
-import 'package:pacstrap/index.dart';
+import 'package:pacstrap/pacstrap.dart';
 
 Future<void> newuser() async {
 
@@ -9,20 +9,17 @@ Future<void> newuser() async {
 
   stdout.write(lang(49));
 
-  final sudouser = stdin.readLineSync()!;
+  final sudouserreq = stdin.readLineSync()!;
 
-  await codeproc('useradd --create-home $sudouser');
-  await codeproc('passwd $sudouser');
-  await syscall('usermod -aG wheel,storage,power $sudouser');
-  await syscall("sed -i 's/^#.*%wheel ALL=(ALL) ALL\$/%wheel ALL=(ALL) ALL/' /etc/sudoers &> /dev/null");
-  await syscall('echo "$sudouser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers');
+  await coderes('useradd --create-home $sudouserreq');
+  await coderes('passwd $sudouserreq');
+  await call('usermod -aG wheel,storage,power $sudouserreq');
+  await call("sed -i 's/^#.*%wheel ALL=(ALL) ALL\$/%wheel ALL=(ALL) ALL/' /etc/sudoers &> /dev/null");
+  await call('echo "$sudouserreq ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers');
 
-  print('');
-  print('=============== OK =============== \n');
-  print(lang(45));
-  stdin.readLineSync();
+  ok();
 
-  locator.get<App>().sudouser = sudouser;
+  sudouser = sudouserreq;
 
 }
 

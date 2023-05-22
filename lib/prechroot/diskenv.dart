@@ -1,8 +1,6 @@
-import 'package:console/console.dart' show Chooser;
 import 'package:dcli/dcli.dart' show cyan;
-import 'package:fpdart/fpdart.dart' show IO;
 
-import 'package:pacstrap/index.dart';
+import 'package:pacstrap/pacstrap.dart';
 
 void diskenv() {
 
@@ -10,11 +8,10 @@ void diskenv() {
 
   print(cyan(lang(35)));
 
-  IO(Chooser<String>([lang(36), lang(37)], message: lang(33)).chooseSync)
+  chooser(lang(33), [lang(36), lang(37)])
     .map((sel) => sel == lang(36)
-      ? locator.get<App>().diskenv = 'HDD'
-      : locator.get<App>().diskenv = 'SSD'
-    )
+      ? diskenvdev = 'HDD'
+      : diskenvdev = 'SSD')
     .run();
 
 }

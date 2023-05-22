@@ -1,9 +1,9 @@
-import 'package:pacstrap/index.dart';
+import 'package:pacstrap/pacstrap.dart';
 
 import 'package:pacstrap/prechroot/index.dart';
 import 'package:pacstrap/postchroot/index.dart';
 
-Future<void> corelive() async {
+void corelive() async {
   clear();
   diskenv();
   await disclaimer();
@@ -15,7 +15,7 @@ Future<void> corelive() async {
   await toggler();
 }
 
-Future<void> corechroot() async {
+void corechroot() async {
   await configurator();
   await hostnamer();
   await localer();
@@ -27,25 +27,21 @@ Future<void> corechroot() async {
   await docker();
   await zsh();
   await swapper();
-  if(locator.get<App>().xfce) await xfcetemplate();
+  if(xfce) await xfcetemplate();
   await optimizations();
   await software();
   await finisher();
 }
 
-Future<void> main(List<String> args) async {
+Future<void> main(
+  final List<String> args
+) async {
 
-  setup();
-
-  await locator.get<App>().init(args);
+  await init(args);
 
   if(args.isEmpty) {
-    await corelive();
-    return;
+    corelive();
   } else {
-    if(args[0] == 'chroot') {
-      corechroot();
-      return;
-    }
+    if(args[0] == 'chroot') corechroot();
   }
 }
