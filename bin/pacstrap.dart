@@ -33,7 +33,7 @@ void corechroot() async {
   await finisher();
 }
 
-Future<void> main(
+void main(
   final List<String> args
 ) async {
 
