@@ -14,7 +14,8 @@ Future<void> docker() async {
     await call('systemctl enable docker.service');
     await call('systemctl start docker.service');
     await coderes('docker pull portainer/portainer-ce:latest');
-    await call('docker run -d -p 9000:9000 --name=portainer --restart=always -v '
+    await call(
+      'docker run -d -p 9000:9000 --name=portainer --restart=always -v '
       '/var/run/docker.sock:/var/run/docker.sock -v '
       'portainer_data:/data portainer/portainer-ce:latest'
     );
