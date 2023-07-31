@@ -1,9 +1,12 @@
+import 'dart:async' show unawaited;
+
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
+import 'package:pacstrap/prechroot/prechroot.dart';
+import 'package:pacstrap/postchroot/postchroot.dart';
 
-import 'package:pacstrap/prechroot/index.dart';
-import 'package:pacstrap/postchroot/index.dart';
-
-void corelive() async {
+Future<void> corelive() async {
   clear();
   diskenv();
   await disclaimer();
@@ -15,7 +18,7 @@ void corelive() async {
   await toggler();
 }
 
-void corechroot() async {
+Future<void> corechroot() async {
   await configurator();
   await hostnamer();
   await localer();
@@ -40,8 +43,8 @@ void main(
   await init(args);
 
   if(args.isEmpty) {
-    corelive();
+    unawaited(corelive());
   } else {
-    if(args[0] == 'chroot') corechroot();
+    if(args[0] == 'chroot') unawaited(corechroot());
   }
 }

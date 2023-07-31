@@ -1,13 +1,17 @@
 import 'dart:io';
 
-import 'package:pacstrap/pacstrap.dart';
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
+import 'package:pacstrap/messages.dart';
 
 Future<void> aur() async {
 
   clear();
   lang(29, PrintQuery.normal);
 
-  await coderes('pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com');
+  await coderes(
+    'pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com'
+  );
   await coderes('pacman-key --lsign-key FBA220DFC880C036');
   await coderes("pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' "
     "'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm"
@@ -32,5 +36,5 @@ Future<void> aur() async {
 
   await coderes('grub-mkconfig -o /boot/grub/grub.cfg');
 
-  ok();
+  okMessage();
 }

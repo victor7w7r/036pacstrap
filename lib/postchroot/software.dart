@@ -1,6 +1,7 @@
-import 'dart:io' show File, FileMode;
+import 'dart:io' show File;
 
 import 'package:dcli/dcli.dart' show cyan;
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
 
@@ -10,8 +11,7 @@ Future<void> software() async {
 
   File('/etc/X11/Xwrapper.config')
     .writeAsStringSync(
-      'allowed_users=anybody',
-      mode: FileMode.write
+      'allowed_users=anybody'
     );
 
   print(cyan('${lang(60)} opera'));
@@ -19,7 +19,7 @@ Future<void> software() async {
   if(stdYesNo()) {
     clear();
     await coderes('pacman -S opera --noconfirm');
-    ok();
+    okMessage();
   }
 
   clear();
@@ -32,7 +32,7 @@ Future<void> software() async {
       'pacman -S nodejs-lts-gallium yarn jdk11-openjdk '
       'jre11-openjdk jre11-openjdk-headless --noconfirm'
     );
-    ok();
+    okMessage();
   }
 
   clear();
@@ -46,7 +46,7 @@ Future<void> software() async {
     await coderes('pacman -S balena-etcher postman github-desktop '
       'visual-studio-code-bin --noconfirm'
     );
-    ok();
+    okMessage();
   }
 
   clear();
@@ -58,7 +58,7 @@ Future<void> software() async {
     await coderes('pacman -S wine playonlinux vlc '
       'exe-thumbnailer --noconfirm'
     );
-    ok();
+    okMessage();
   }
 
   clear();
@@ -68,7 +68,7 @@ Future<void> software() async {
   if(stdYesNo()) {
     clear();
     await coderes('pacman -S teamviewer remmina libvncserver --noconfirm');
-    ok();
+    okMessage();
   }
 
   clear();
@@ -78,7 +78,7 @@ Future<void> software() async {
   if(stdYesNo()) {
     clear();
     await coderes('pacman -S xarchiver discord --noconfirm');
-    ok();
+    okMessage();
   }
 
   clear();
@@ -90,7 +90,7 @@ Future<void> software() async {
     await coderes('pacman -S baobab ntfs-3g exfat-utils '
       'gparted preload --noconfirm'
     );
-    ok();
+    okMessage();
   }
 
   clear();
@@ -104,7 +104,7 @@ Future<void> software() async {
     await coderes('pacman -S noto-fonts-emoji ttf-dejavu xorg-fonts-misc '
       'noto-color-emoji-fontconfig ttf-cascadia-code --noconfirm'
     );
-    ok();
+    okMessage();
   }
 
   clear();
@@ -116,6 +116,6 @@ Future<void> software() async {
     await coderes('pacman -S lshw lsb-release smartmontools '
       'sl asciiquarium --noconfirm'
     );
-    ok();
+    okMessage();
   }
 }

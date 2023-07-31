@@ -1,5 +1,7 @@
 import 'dart:io' show Directory;
 
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> toggler() async {

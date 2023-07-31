@@ -1,11 +1,9 @@
 import 'dart:io' show Directory, Platform;
 
-import 'package:console/console.dart' show Chooser;
-import 'package:dcli/dcli.dart' show cyan, green;
-import 'package:fpdart/fpdart.dart' show IO;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
   show InternetConnectionChecker;
 import 'package:system_info2/system_info2.dart' show SysInfo;
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
 
@@ -15,18 +13,8 @@ Future<void> init(
 
   if(args.isEmpty) {
     clear();
-    print(green('Bienvenido / Welcome'));
-    print(cyan(
-      'Please, choose your language / Por favor selecciona tu idioma'
-    ));
-
-  IO(Chooser<String>(
-    ['English', 'Espanol'],
-    message: 'Number/Numero: '
-  ).chooseSync)
-    .map((sel) => english = sel == 'English')
-    .run();
-
+    setLang();
+    initLang();
     clear();
     cover();
 
@@ -34,26 +22,26 @@ Future<void> init(
 
     if(!Platform.isLinux) error(0);
 
-    await checkUid().then((val){
+    await checkUid().then((final val){
       if(!val) error(1);
     });
 
-    if(!(await Directory('/sys/firmware/efi').exists())) error(2);
+    if(!Directory('/sys/firmware/efi').existsSync()) error(2);
 
     if(SysInfo.kernelArchitecture.name != 'x86_64') error(3);
 
-    await success('pacman').then((val){
+    await success('pacman').then((final val) {
       if(!val) error(4);
     });
 
-    await InternetConnectionChecker().hasConnection.then((iin){
+    await InternetConnectionChecker().hasConnection.then((final iin) {
       if(!iin) error(5);
     });
 
     lang(6, PrintQuery.normal);
     await call('pacman -Sy &> /dev/null');
 
-    await success('fsck.f2fs').then((val) async {
+    await success('fsck.f2fs').then((final val) async {
       if(!val) {
         lang(7, PrintQuery.normal);
         await call(
@@ -62,7 +50,7 @@ Future<void> init(
       }
     });
 
-    await success('whiptail').then((val) async {
+    await success('whiptail').then((final val) async {
       if(!val) {
         lang(8, PrintQuery.normal);
         await call(
@@ -71,7 +59,7 @@ Future<void> init(
       }
     });
 
-    await success('pacstrap').then((val) async {
+    await success('pacstrap').then((final val) async {
       if(!val) {
         lang(9, PrintQuery.normal);
         await call(

@@ -1,12 +1,14 @@
 import 'package:dcli/dcli.dart' show cyan;
 
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> configurator() async {
   clear();
   lang(25, PrintQuery.normal);
   await coderes('passwd');
-  ok();
+  okMessage();
   clear();
   print(cyan(lang(51)));
 
@@ -14,12 +16,12 @@ Future<void> configurator() async {
     clear();
     print('=============== INTEL MICROCODE  =============== \n');
     await coderes('pacman -S intel-ucode --noconfirm');
-    ok();
+    okMessage();
   } else {
     clear();
     print('=============== AMD MICROCODE  =============== \n');
     await coderes('pacman -S amd-ucode --noconfirm');
-    ok();
+    okMessage();
   }
 
   clear();
@@ -32,7 +34,7 @@ Future<void> configurator() async {
   await coderes('grub-mkconfig -o /boot/grub/grub.cfg');
   await call('umount /boot/efi');
 
-  ok();
+  okMessage();
 
   clear();
 
@@ -44,6 +46,6 @@ Future<void> configurator() async {
     '/etc/ssh/sshd_config &> /dev/null'
   );
 
-  ok();
+  okMessage();
 
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dcli/dcli.dart' show cyan;
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
 
@@ -14,15 +15,15 @@ Future<void> swapmenu() async {
 
     final ( verify, swapParts ) = ( <String>[], <String>[] );
 
-    if(RegExp(r'sd[A-Za-z]').hasMatch(disk)){
+    if(RegExp('sd[A-Za-z]').hasMatch(disk)){
       verify.addAll(await syssplit(
         "find $disk* | sed '/[[:alpha:]]\$/d'"
       ));
-    } else if(RegExp(r'mmcblk[0-9_-]').hasMatch(disk)) {
+    } else if(RegExp('mmcblk[0-9_-]').hasMatch(disk)) {
       verify.addAll(await syssplit(
         "find $disk* | sed '/k[[:digit:]]\$/d'"
       ));
-    } else if(RegExp(r'nvme[0-9_-]').hasMatch(disk)) {
+    } else if(RegExp('nvme[0-9_-]').hasMatch(disk)) {
       verify.addAll(await syssplit(
         "find $disk* | sed '/e[[:digit:]]\$/d'"
       ));
@@ -46,7 +47,7 @@ Future<void> swapmenu() async {
     print(cyan(lang(43)));
 
     chooser(lang(33), swapParts)
-      .map((sel) => swappart = sel)
+      .map((final sel) => swappart = sel)
       .run();
 
   }

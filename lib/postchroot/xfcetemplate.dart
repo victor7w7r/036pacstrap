@@ -1,5 +1,7 @@
 import 'package:dcli/dcli.dart' show cyan;
 
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> xfcetemplate() async {
@@ -16,6 +18,7 @@ Future<void> xfcetemplate() async {
     );
     await coderes(
       "sudo -u $sudouser bash -c 'yay -S numix-gtk-theme numix-icon-theme-git "
+      // ignore: lines_longer_than_80_chars
       'numix-circle-icon-theme-git xfce4-windowck-plugin vala-panel-appmenu-common-git '
       "vala-panel-appmenu-xfce-git --noconfirm'"
     );
@@ -27,6 +30,6 @@ Future<void> xfcetemplate() async {
     await call('cp -r /root/.config /home/$sudouser/');
     await call('chown -R $sudouser:$sudouser /home/$sudouser/.config');
 
-    ok();
+    okMessage();
   }
 }

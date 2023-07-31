@@ -1,5 +1,7 @@
 import 'package:pacstrap/pacstrap.dart';
 
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 Future<void> pacstraper() async {
 
   clear();
@@ -13,6 +15,6 @@ Future<void> pacstraper() async {
   );
   await call('genfstab -U /mnt >> /mnt/etc/fstab');
 
-  ok();
+  okMessage();
 
 }

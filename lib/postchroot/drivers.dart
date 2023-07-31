@@ -1,5 +1,7 @@
 import 'package:dcli/dcli.dart' show cyan;
 
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> drivers() async {
@@ -20,25 +22,25 @@ Future<void> drivers() async {
     await coderes('pacman -S xf86-video-intel '
       'intel-media-driver intel-media-sdk --noconfirm'
     );
-    ok();
+    okMessage();
   } else if (sel == 'ATI') {
     print('=============== ATI =============== \n');
     await coderes(
       'pacman -S xf86-video-ati --noconfirm'
     );
-    ok();
+    okMessage();
   } else if(sel == 'AMD') {
     print('=============== AMD =============== \n');
     await coderes(
       'pacman -S xf86-video-amdgpu --noconfirm'
     );
-    ok();
+    okMessage();
   } else if(sel == 'NVIDIA') {
     print('=============== NVIDIA =============== \n');
     await coderes(
       'pacman -S nvidia nvidia-utils --noconfirm'
     );
-    ok();
+    okMessage();
   } else if(sel == 'VMware') {
     print('=============== VMWARE =============== \n');
     await coderes(
@@ -46,7 +48,7 @@ Future<void> drivers() async {
       'xf86-video-vmware --noconfirm'
     );
     await coderes('systemctl enable vmtoolsd');
-    ok();
+    okMessage();
   }
 
 }

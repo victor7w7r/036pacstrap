@@ -1,3 +1,5 @@
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> zsh() async {
@@ -27,6 +29,6 @@ Future<void> zsh() async {
   await call('chown -R $sudouser:$sudouser /home/$sudouser/.oh-my-zsh');
   await call('chown $sudouser /home/$sudouser/.zshrc');
 
-  ok();
+  okMessage();
 
 }

@@ -1,24 +1,8 @@
-import 'dart:io' show exit;
+// ignore_for_file: no_adjacent_strings_in_list, lines_longer_than_80_chars
+import 'package:zerothreesix_dart/zerothreesix_dart.dart' show setDictEng, setDictEsp;
 
-import 'package:console/console.dart' show Console;
-import 'package:dcli/dcli.dart' show cyan, red;
-import 'package:fpdart/fpdart.dart' show IO;
-
-import 'package:pacstrap/pacstrap.dart';
-
-enum PrintQuery {
-  normal, inline,
-  warn, error
-}
-
-String lang(
-  final int index, [
-    final PrintQuery? typeQuery,
-    final String? additional
-  ]
-) {
-
-  final dictEsp = [
+void initLang() {
+  setDictEsp([
     'Este sistema no es GNU/Linux, saliendo',
     'Tú no eres superusuario, por favor ejecuta como root',
 		'Este script sólo trabaja en UEFI/EFI, considera '
@@ -40,7 +24,7 @@ String lang(
 		'Elegiste como HDD, pero este dispositivo no es rotational, '
       'por favor verifica y ejecuta este script otra vez',
 		'Este dispositivo no tiene una partición EFI',
-		"Este dispositivo tiene una partición EFI en otro lado que no sea ${additional ?? ""} 1",
+		'Este dispositivo tiene una partición EFI en otro lado que no sea *1',
 		'No hay discos disponibles en tu sistema, por favor verifica!!!',
 		'=============== FORMATEAR PARTICIONES DE RAIZ E INTERCAMBIO =============== \n',
 		'=============== FORMATEAR PARTICION DE RAIZ =============== \n',
@@ -95,10 +79,9 @@ String lang(
 		'¿Te gustaría instalar esto?',
     'Instalando un entorno de escritorio, hay un servicio que rompe el sistema, '
       'esto se arreglará eventaulmente, de momento, usa XORG',
-  ];
-
-  final dictEng = [
-    'Your Operating System is not GNU/Linux, exiting',
+  ]);
+  setDictEng([
+      'Your Operating System is not GNU/Linux, exiting',
     'You are not superuser, please run as root',
 		'This scripts only works in UEFI/EFI systems, consider '
       'change your PC or check your BIOS',
@@ -117,7 +100,7 @@ String lang(
 		'You choose a HDD device, but this device is not rotational, '
       'please check and run this script again',
 		"The device doesn't have a EFI partition",
-		"The device has the EFI partition in other side than ${additional ?? ""} 1",
+		'The device has the EFI partition in other side than *1',
 		'All the partitions of the device are mounted in your system, '
       'please unmount the desired partition',
 		'=============== FORMAT ROOT FILESYSTEM AND SWAP =============== \n',
@@ -171,29 +154,5 @@ String lang(
 		'Do you like to install this?',
     'Installing any Desktop Env, dev service breaks your system, '
       'this bug will be fixed later, i recommend to use XORG ONLY'
-  ];
-
-  return IO(() =>
-    english ? dictEng[index] : dictEsp[index]
-  ).map((sel) => typeQuery != null
-    ? IO(() => switch(typeQuery) {
-        PrintQuery.normal =>
-          print(sel),
-        PrintQuery.inline =>
-          Console.write(sel),
-        PrintQuery.warn =>
-          print('${cyan('[*] ')} WARNING: $sel'),
-        PrintQuery.error =>
-          print('${red('[*] ')} ERROR: $sel')
-      })
-      .map((_) => '').run()
-    : sel
-  ).run();
-}
-
-void error(final int index) {
-  clear();
-  lang(index, PrintQuery.error);
-  print('\n');
-  exit(1);
+  ]);
 }

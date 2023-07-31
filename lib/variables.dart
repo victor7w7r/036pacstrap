@@ -1,9 +1,8 @@
-var diskenvdev = '';
-var disk = '';
-var efipart = '';
-var rootpart = '';
-var swappart = '';
+String diskenvdev = '';
+String disk = '';
+String efipart = '';
+String rootpart = '';
+String swappart = '';
 
-var english = false;
-var xfce = false;
-var sudouser = '';
+bool xfce = false;
+String sudouser = '';

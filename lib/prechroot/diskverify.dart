@@ -1,6 +1,7 @@
 import 'dart:io' show exit;
 
-import 'package:fpdart/fpdart.dart';
+import 'package:fpdart/fpdart.dart' show Task;
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
 
@@ -29,11 +30,11 @@ Future<void> diskverify(
     exit(1);
   }
 
-  if(RegExp(r'sd[A-Za-z]').hasMatch(device)) {
+  if(RegExp('sd[A-Za-z]').hasMatch(device)) {
     final rotational = await Task(() =>
       sys('echo $device | cut -d "/" -f3')
     )
-      .flatMap((block) => Task(() =>
+      .flatMap((final block) => Task(() =>
         sys('cat /sys/block/$block/queue/rotational'))
       )
       .run();

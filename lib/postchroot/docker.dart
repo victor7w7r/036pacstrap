@@ -1,5 +1,7 @@
 import 'package:dcli/dcli.dart' show cyan;
 
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> docker() async {
@@ -19,7 +21,7 @@ Future<void> docker() async {
       '/var/run/docker.sock:/var/run/docker.sock -v '
       'portainer_data:/data portainer/portainer-ce:latest'
     );
-    ok();
+    okMessage();
   }
 
 }

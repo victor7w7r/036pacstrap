@@ -1,5 +1,7 @@
 import 'package:dcli/dcli.dart' show cyan;
 
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> blackarch() async {
@@ -12,6 +14,6 @@ Future<void> blackarch() async {
     await coderes('cd; curl -O https://blackarch.org/strap.sh');
     await call('chmod +x /root/strap.sh');
     await coderes('/root/strap.sh');
-    ok();
+    okMessage();
   }
 }

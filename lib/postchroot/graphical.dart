@@ -1,10 +1,11 @@
 import 'package:dcli/dcli.dart' show cyan;
 
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> graphical() async {
 
-  var isXfce = false;
   clear();
   await dialog('036 Creative Studios',
     lang(50), '8', '80'
@@ -22,12 +23,13 @@ Future<void> graphical() async {
   if(sel == 'XFCE') {
     print('=============== XFCE =============== \n');
     await coderes('pacman -S xorg --noconfirm');
-    await coderes('pacman -S xfce4 xfce4-goodies gtk-engines gtk-engine-murrine '
+    await coderes(
+      'pacman -S xfce4 xfce4-goodies gtk-engines gtk-engine-murrine '
       'xdg-user-dirs gvfs network-manager-applet '
       'volumeicon firefox gdm grub-customizer --noconfirm'
     );
     await coderes('systemctl enable gdm.service');
-    ok();
+    okMessage();
     xfce = true;
   } else if(sel == 'GNOME') {
     print('=============== GNOME =============== \n');
@@ -37,7 +39,7 @@ Future<void> graphical() async {
     );
     await coderes('pacman -S firefox grub-customizer --noconfirm');
     await coderes('systemctl enable gdm.service');
-    ok();
+    okMessage();
     xfce = false;
   } else if(sel == 'Plasma') {
     print('=============== KDE =============== \n');
@@ -49,21 +51,20 @@ Future<void> graphical() async {
       'firefox grub-customizer --noconfirm'
     );
     await coderes('systemctl enable sddm.service');
-    ok();
+    okMessage();
     xfce = false;
   } else if(sel == 'XORG') {
     print('=============== XORG ONLY =============== \n');
     await coderes('pacman -S xorg --noconfirm');
-    ok();
+    okMessage();
     xfce = false;
   } else if(sel == 'CUTEFISH') {
     print('=============== CUTEFISH =============== \n');
     await coderes('pacman -S xorg --noconfirm');
     await coderes('pacman -S cutefish --noconfirm');
-    ok();
+    okMessage();
     xfce = false;
   } else {
     xfce = false;
   }
-  xfce = isXfce;
 }

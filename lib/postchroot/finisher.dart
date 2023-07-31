@@ -1,6 +1,6 @@
 import 'dart:io' show exit;
 
-import 'package:pacstrap/pacstrap.dart';
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 Future<void> finisher() async {
   clear();

@@ -1,5 +1,7 @@
 import 'dart:io' show File, FileMode;
 
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> swapper() async {
@@ -14,9 +16,11 @@ Future<void> swapper() async {
     );
   } else {
     await coderes("sudo -u $sudouser bash -c 'cd; git clone https://aur.archlinux.org/zramswap.git'");
-    await coderes("sudo -u $sudouser bash -c 'cd; cd zramswap; makepkg -si --noconfirm'");
+    await coderes(
+      "sudo -u $sudouser bash -c 'cd; cd zramswap; makepkg -si --noconfirm'"
+    );
     await call("sudo -u $sudouser bash -c 'cd; rm -rf zramswap'");
     await call('systemctl enable zramswap.service');
   }
-  ok();
+  okMessage();
 }

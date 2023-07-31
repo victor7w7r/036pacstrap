@@ -1,18 +1,17 @@
+import 'dart:async' show unawaited;
 import 'dart:io' show File, FileMode;
 
 import 'package:dcli/dcli.dart' show cyan;
 import 'package:console/console.dart' show readInput;
 
-import 'package:pacstrap/pacstrap.dart';
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 Future<void> hostnamer() async {
 
   clear();
 
-  await readInput(lang(46)).then((ans){
-    File('/etc/hostname').writeAsStringSync(
-      ans, mode: FileMode.write
-    );
+  await readInput(lang(46)).then((final ans){
+    File('/etc/hostname').writeAsStringSync(ans);
     File('/etc/hosts').writeAsStringSync(
       'echo 127.0.1.1 $ans',
       mode: FileMode.append
@@ -41,9 +40,8 @@ Future<void> localer() async {
     "sed -i 's/^#$sel.UTF-8 UTF-8/$sel.UTF-8 UTF-8/' /etc/locale.gen &> /dev/null"
   );
   await coderes('locale-gen');
-  File('/etc/hostname').writeAsString(
-    'LANG="$sel.UTF-8"\nLC_TIME="$sel.UTF-8"\nLANGUAGE="$sel:$sel:es"\n',
-    mode: FileMode.write
-  );
+  unawaited(File('/etc/hostname').writeAsString(
+    'LANG="$sel.UTF-8"\nLC_TIME="$sel.UTF-8"\nLANGUAGE="$sel:$sel:es"\n'
+  ));
 
 }

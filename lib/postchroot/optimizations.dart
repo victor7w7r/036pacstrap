@@ -1,4 +1,6 @@
-import 'dart:io' show File, FileMode;
+import 'dart:io' show File;
+
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
 
@@ -17,9 +19,8 @@ Future<void> optimizations() async {
       'blacklist iTCO_wdt\n'
       'blacklist joydev\n'
       'blacklist mousedev\nblacklist mac_hid',
-      mode: FileMode.write
     );
 
-  ok();
+  okMessage();
 
 }
