@@ -3,8 +3,8 @@ import 'dart:async' show unawaited;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
-import 'package:pacstrap/prechroot/prechroot.dart';
 import 'package:pacstrap/postchroot/postchroot.dart';
+import 'package:pacstrap/prechroot/prechroot.dart';
 
 Future<void> corelive() async {
   clear();
