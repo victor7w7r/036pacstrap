@@ -22,7 +22,7 @@ Future<void> aur() async {
     mode: FileMode.append
   );
 
-  await coderes('pacman -Syyu yay powerpill linux-lqx '
+  await coderes('pacman -Syyu yay linux-lqx '
     'linux-lqx-headers pamac-aur rate-mirrors --noconfirm'
   );
 
@@ -30,9 +30,7 @@ Future<void> aur() async {
     'https arch | sudo tee /etc/pacman.d/mirrorlist'
   );
 
-  await coderes('pacman -S --needed base-devel '
-    'fakeroot packer --noconfirm'
-  );
+  await coderes('pacman -S --needed fakeroot packer --noconfirm');
 
   await coderes('grub-mkconfig -o /boot/grub/grub.cfg');
 

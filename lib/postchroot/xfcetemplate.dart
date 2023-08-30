@@ -22,14 +22,13 @@ Future<void> xfcetemplate() async {
       'numix-circle-icon-theme-git xfce4-windowck-plugin vala-panel-appmenu-common-git '
       "vala-panel-appmenu-xfce-git --noconfirm'"
     );
-    await coderes(
-      'wget https://raw.githubusercontent.com/victor7w7r/036pacstrap/master/.config.tar.xz '
-      '-O /root/.config.tar.xz'
-    );
-    await coderes("bash -c 'cd; tar -xf .config.tar.xz'");
-    await call('cp -r /root/.config /home/$sudouser/');
-    await call('chown -R $sudouser:$sudouser /home/$sudouser/.config');
-
+    await call('cp -r /root/dotfiles/xfce4 /root/.config/xfce4');
+    await call('cp -r /root/dotfiles/xfce4 /home/$sudouser/.config/xfce4');
+    await call('cp -r /root/dotfiles/gtk-3.0 /root/.config/gtk-3.0');
+    await call('cp -r /root/dotfiles/gtk-3.0 /home/$sudouser/.config/gtk-3.0');
+    await call('chown -R $sudouser:$sudouser /home/$sudouser/.config/xfce4');
+    await call('chown -R $sudouser:$sudouser /home/$sudouser/.config/gtk-3.0');
+    await call('rm -rf /root/dotfiles');
     okMessage();
   }
 }

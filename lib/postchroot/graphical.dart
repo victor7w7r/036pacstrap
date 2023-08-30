@@ -16,7 +16,7 @@ Future<void> graphical() async {
 
   final sel = stdChoose([
     'XFCE', 'GNOME', 'Plasma',
-    'XORG', 'CUTEFISH', 'NOGUI'
+    'XORG', 'NOGUI'
   ]);
 
   clear();
@@ -56,12 +56,6 @@ Future<void> graphical() async {
   } else if(sel == 'XORG') {
     print('=============== XORG ONLY =============== \n');
     await coderes('pacman -S xorg --noconfirm');
-    okMessage();
-    xfce = false;
-  } else if(sel == 'CUTEFISH') {
-    print('=============== CUTEFISH =============== \n');
-    await coderes('pacman -S xorg --noconfirm');
-    await coderes('pacman -S cutefish --noconfirm');
     okMessage();
     xfce = false;
   } else {

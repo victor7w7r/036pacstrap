@@ -11,7 +11,7 @@ Future<void> pacstraper() async {
     'pacstrap /mnt base linux linux-firmware linux-headers nano sudo vi '
     'neovim git wget grub efibootmgr os-prober rsync networkmanager neofetch '
     'f2fs-tools base-devel openssh arch-install-scripts screen unrar p7zip '
-    'zsh dosfstools python'
+    'fish dosfstools python'
   );
   await call('genfstab -U /mnt >> /mnt/etc/fstab');
 

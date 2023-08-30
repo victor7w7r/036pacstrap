@@ -28,7 +28,7 @@ Future<void> corechroot() async {
   await aur();
   await blackarch();
   await docker();
-  await zsh();
+  await fish();
   await swapper();
   if(xfce) await xfcetemplate();
   await optimizations();
