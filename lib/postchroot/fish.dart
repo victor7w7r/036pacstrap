@@ -3,7 +3,6 @@ import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> fish() async {
-
   clear();
 
   header('FISH');
@@ -26,5 +25,4 @@ Future<void> fish() async {
   await call('chown -R $sudouser:$sudouser /home/$sudouser/.config/fish');
 
   okMessage();
-
 }

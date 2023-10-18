@@ -30,21 +30,18 @@ Future<void> corechroot() async {
   await docker();
   await fish();
   await swapper();
-  if(xfce) await xfcetemplate();
+  if (xfce) await xfcetemplate();
   await optimizations();
   await software();
   await finisher();
 }
 
-void main(
-  final List<String> args
-) async {
-
+void main(final List<String> args) async {
   await init(args);
 
-  if(args.isEmpty) {
+  if (args.isEmpty) {
     unawaited(corelive());
   } else {
-    if(args[0] == 'chroot') unawaited(corechroot());
+    if (args[0] == 'chroot') unawaited(corechroot());
   }
 }

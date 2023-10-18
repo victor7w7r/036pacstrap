@@ -3,7 +3,7 @@ description: 036pacstrap
 version: 1.0.0
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: '>=3.1.3 <4.0.0'
 
 dependencies:
   console: ^4.1.0
@@ -14,4 +14,4 @@ dependencies:
   zerothreesix_dart: ^0.0.5
 
 dev_dependencies:
-  lints: ^2.1.1
+  lints: ^3.0.0
