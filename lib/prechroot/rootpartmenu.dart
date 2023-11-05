@@ -21,7 +21,8 @@ Future<void> rootpartmenu() async {
     verify.addAll(await syssplit("find $disk* | sed '/k[[:digit:]]\$/d'"));
   } else if (RegExp('nvme[0-9_-]').hasMatch(disk)) {
     verify.addAll(
-        await syssplit("find $disk* | sed '/e[[:digit:]]n[[:digit:]]\$/d'"));
+      await syssplit("find $disk* | sed '/e[[:digit:]]n[[:digit:]]\$/d'"),
+    );
   }
 
   for (final part in verify) {

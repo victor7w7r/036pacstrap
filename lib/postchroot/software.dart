@@ -31,8 +31,12 @@ Future<void> software() async {
 
   clear();
 
-  print(cyan(
-      '${lang(60)} balena-etcher, postman, github-desktop, visual-studio-code-bin'));
+  print(
+    cyan(
+      '${lang(60)} balena-etcher, postman, '
+      'github-desktop, visual-studio-code-bin',
+    ),
+  );
 
   if (stdYesNo()) {
     clear();
@@ -85,8 +89,10 @@ Future<void> software() async {
 
   clear();
 
-  print(cyan('${lang(60)} noto-fonts-emoji ttf-dejavu '
-      'xorg-fonts-misc noto-color-emoji-fontconfig'));
+  print(
+    cyan('${lang(60)} noto-fonts-emoji ttf-dejavu '
+        'xorg-fonts-misc noto-color-emoji-fontconfig'),
+  );
 
   if (stdYesNo()) {
     clear();

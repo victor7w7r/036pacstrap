@@ -11,7 +11,8 @@ Future<void> toggler() async {
   await call('cp ${Directory.current.path}/pacstrap /mnt/pacstrap');
   await call('chmod +x /mnt/pacstrap');
   await coderes(
-      'arch-chroot /mnt ./pacstrap chroot $diskenvdev ${english ? 1 : 0}');
+    'arch-chroot /mnt ./pacstrap chroot $diskenvdev ${english ? 1 : 0}',
+  );
 
   lang(24, PrintQuery.normal);
   await call('rm -f /mnt/pacstrap &> /dev/null');

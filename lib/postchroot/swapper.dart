@@ -13,9 +13,11 @@ Future<void> swapper() async {
         .writeAsStringSync('vm.swappiness=60', mode: FileMode.append);
   } else {
     await coderes(
-        "sudo -u $sudouser bash -c 'cd; git clone https://aur.archlinux.org/zramswap.git'");
+      "sudo -u $sudouser bash -c 'cd; git clone https://aur.archlinux.org/zramswap.git'",
+    );
     await coderes(
-        "sudo -u $sudouser bash -c 'cd; cd zramswap; makepkg -si --noconfirm'");
+      "sudo -u $sudouser bash -c 'cd; cd zramswap; makepkg -si --noconfirm'",
+    );
     await call("sudo -u $sudouser bash -c 'cd; rm -rf zramswap'");
     await call('systemctl enable zramswap.service');
   }

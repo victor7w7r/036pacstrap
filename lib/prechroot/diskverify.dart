@@ -27,8 +27,10 @@ Future<void> diskverify(final String device) async {
 
   if (RegExp('sd[A-Za-z]').hasMatch(device)) {
     final rotational = await Task(() => sys('echo $device | cut -d "/" -f3'))
-        .flatMap((final block) =>
-            Task(() => sys('cat /sys/block/$block/queue/rotational')))
+        .flatMap(
+          (final block) =>
+              Task(() => sys('cat /sys/block/$block/queue/rotational')),
+        )
         .run();
 
     if (diskenvdev == 'SSD' && rotational == '1') {

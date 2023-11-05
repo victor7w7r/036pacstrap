@@ -15,6 +15,7 @@ Future<void> xfcetemplate() async {
         'libdbusmenu-gtk3 appmenu-gtk-module xfce4-dockbarx-plugin '
         'vala-panel-appmenu-registrar vala-panel --noconfirm');
     await coderes(
+        // ignore: lines_longer_than_80_chars
         "sudo -u $sudouser bash -c 'yay -S numix-gtk-theme numix-icon-theme-git "
         // ignore: lines_longer_than_80_chars
         'numix-circle-icon-theme-git xfce4-windowck-plugin vala-panel-appmenu-common-git '

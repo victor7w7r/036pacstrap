@@ -9,13 +9,14 @@ Future<void> diskformat() async {
 
   if (diskenvdev == 'HDD') {
     await dialog(
-        '036 Creative Studios',
-        '${lang(44)} \n'
-            '$efipart (EFI) \n'
-            '$rootpart (ROOT) \n'
-            '$swappart (SWAP)',
-        '10',
-        '50');
+      '036 Creative Studios',
+      '${lang(44)} \n'
+          '$efipart (EFI) \n'
+          '$rootpart (ROOT) \n'
+          '$swappart (SWAP)',
+      '10',
+      '50',
+    );
     clear();
     contQuestion();
 
@@ -32,12 +33,13 @@ Future<void> diskformat() async {
     }
   } else {
     await dialog(
-        '036 Creative Studios',
-        '${lang(44)} \n'
-            '$efipart (EFI) \n'
-            '$rootpart (ROOT)',
-        '10',
-        '50');
+      '036 Creative Studios',
+      '${lang(44)} \n'
+          '$efipart (EFI) \n'
+          '$rootpart (ROOT)',
+      '10',
+      '50',
+    );
     clear();
 
     contQuestion();

@@ -32,8 +32,12 @@ Future<void> localer() async {
 
   clear();
   await call(
-      "sed -i 's/^#$sel.UTF-8 UTF-8/$sel.UTF-8 UTF-8/' /etc/locale.gen &> /dev/null");
+    "sed -i 's/^#$sel.UTF-8 UTF-8/$sel.UTF-8 UTF-8/' /etc/locale.gen &> /dev/null",
+  );
   await coderes('locale-gen');
-  unawaited(File('/etc/hostname').writeAsString(
-      'LANG="$sel.UTF-8"\nLC_TIME="$sel.UTF-8"\nLANGUAGE="$sel:$sel:es"\n'));
+  unawaited(
+    File('/etc/hostname').writeAsString(
+      'LANG="$sel.UTF-8"\nLC_TIME="$sel.UTF-8"\nLANGUAGE="$sel:$sel:es"\n',
+    ),
+  );
 }

@@ -16,7 +16,8 @@ Future<void> newuser() async {
   await coderes('passwd $sudouserreq');
   await call('usermod -aG wheel,storage,power $sudouserreq');
   await call(
-      r"sed -i 's/^#.*%wheel ALL=(ALL) ALL$/%wheel ALL=(ALL) ALL/' /etc/sudoers &> /dev/null");
+    r"sed -i 's/^#.*%wheel ALL=(ALL) ALL$/%wheel ALL=(ALL) ALL/' /etc/sudoers &> /dev/null",
+  );
   await call('echo "$sudouserreq ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers');
 
   okMessage();

@@ -9,7 +9,8 @@ Future<void> optimizations() async {
   lang(31, PrintQuery.normal);
 
   await coderes(
-      """sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=".*"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=0 nowatchdog"/' /etc/default/grub &> /dev/null""");
+    """sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=".*"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=0 nowatchdog"/' /etc/default/grub &> /dev/null""",
+  );
   await coderes('grub-mkconfig -o /boot/grub/grub.cfg');
   await call('systemctl mask lvm2-monitor');
   await call('touch /etc/modprobe.d/blacklists.conf');
