@@ -1,6 +1,5 @@
 import 'dart:io' show exit;
 
-import 'package:dcli/dcli.dart' show cyan;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 Future<String> _allAbsoluteDev(final String dev) => sys('echo $dev '
@@ -35,7 +34,7 @@ Future<String> diskmenu() async {
     array.add('/dev/$part');
   }
 
-  print(cyan(lang(41)));
+  cyan(lang(41));
 
   return chooser(lang(33), array).run();
 }

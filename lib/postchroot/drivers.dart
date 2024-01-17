@@ -1,5 +1,3 @@
-import 'package:dcli/dcli.dart' show cyan;
-
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
@@ -7,7 +5,7 @@ import 'package:pacstrap/pacstrap.dart';
 Future<void> drivers() async {
   clear();
 
-  print(cyan(lang(51)));
+  cyan(lang(51));
 
   final sel = stdChoose(['Intel', 'ATI', 'AMD', 'NVIDIA', 'VMware']);
 

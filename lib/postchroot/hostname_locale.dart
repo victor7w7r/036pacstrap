@@ -1,9 +1,7 @@
 import 'dart:async' show unawaited;
 import 'dart:io' show File, FileMode;
 
-import 'package:dcli/dcli.dart' show cyan;
 import 'package:console/console.dart' show readInput;
-
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 Future<void> hostnamer() async {
@@ -26,7 +24,7 @@ Future<void> localer() async {
 
   clear();
 
-  print(cyan(lang(48)));
+  cyan(lang(48));
 
   final sel = chooser(lang(33), ['es_ES', 'en_US']).run();
 

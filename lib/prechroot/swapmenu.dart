@@ -1,6 +1,5 @@
-import 'dart:io';
+import 'dart:io' show exit;
 
-import 'package:dcli/dcli.dart' show cyan;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
@@ -36,7 +35,7 @@ Future<void> swapmenu() async {
       exit(1);
     }
 
-    print(cyan(lang(43)));
+    cyan(lang(43));
 
     chooser(lang(33), swapParts).map((final sel) => swappart = sel).run();
   }

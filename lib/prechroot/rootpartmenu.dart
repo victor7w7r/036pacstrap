@@ -1,6 +1,5 @@
 import 'dart:io' show exit;
 
-import 'package:dcli/dcli.dart' show cyan;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
@@ -42,7 +41,7 @@ Future<void> rootpartmenu() async {
 
   efipart = efipartquery;
 
-  print(cyan(lang(42)));
+  cyan(lang(42));
 
   chooser(lang(33), rootParts).map((final sel) => rootpart = sel).run();
 }

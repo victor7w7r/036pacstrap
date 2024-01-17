@@ -1,5 +1,3 @@
-import 'package:dcli/dcli.dart' show cyan;
-
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
@@ -7,7 +5,7 @@ import 'package:pacstrap/pacstrap.dart';
 Future<void> xfcetemplate() async {
   clear();
 
-  print(cyan(lang(59)));
+  cyan(lang(59));
 
   if (stdYesNo()) {
     await coderes(

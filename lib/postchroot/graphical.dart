@@ -1,5 +1,3 @@
-import 'package:dcli/dcli.dart' show cyan;
-
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
@@ -9,7 +7,7 @@ Future<void> graphical() async {
   await dialog('036 Creative Studios', lang(50), '8', '80');
   clear();
 
-  print(cyan(lang(50)));
+  cyan(lang(50));
 
   final sel = stdChoose(['XFCE', 'GNOME', 'Plasma', 'XORG', 'NOGUI']);
 

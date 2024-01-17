@@ -1,6 +1,5 @@
 import 'dart:io' show File;
 
-import 'package:dcli/dcli.dart' show cyan;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
@@ -10,7 +9,7 @@ Future<void> software() async {
 
   File('/etc/X11/Xwrapper.config').writeAsStringSync('allowed_users=anybody');
 
-  print(cyan('${lang(60)} opera'));
+  cyan('${lang(60)} opera');
 
   if (stdYesNo()) {
     clear();
@@ -20,7 +19,7 @@ Future<void> software() async {
 
   clear();
 
-  print(cyan('${lang(60)} nodejs, yarn, jdk'));
+  cyan('${lang(60)} nodejs, yarn, jdk');
 
   if (stdYesNo()) {
     clear();
@@ -31,11 +30,9 @@ Future<void> software() async {
 
   clear();
 
-  print(
-    cyan(
-      '${lang(60)} balena-etcher, postman, '
-      'github-desktop, visual-studio-code-bin',
-    ),
+  cyan(
+    '${lang(60)} balena-etcher, postman, '
+    'github-desktop, visual-studio-code-bin',
   );
 
   if (stdYesNo()) {
@@ -47,7 +44,7 @@ Future<void> software() async {
 
   clear();
 
-  print(cyan('${lang(60)} wine playonlinux vlc exe-thumbnailer'));
+  cyan('${lang(60)} wine playonlinux vlc exe-thumbnailer');
 
   if (stdYesNo()) {
     clear();
@@ -58,7 +55,7 @@ Future<void> software() async {
 
   clear();
 
-  print(cyan('${lang(60)} teamviewer remmina libvncserver'));
+  cyan('${lang(60)} teamviewer remmina libvncserver');
 
   if (stdYesNo()) {
     clear();
@@ -68,7 +65,7 @@ Future<void> software() async {
 
   clear();
 
-  print(cyan('${lang(60)} xarchiver discord'));
+  cyan('${lang(60)} xarchiver discord');
 
   if (stdYesNo()) {
     clear();
@@ -78,7 +75,7 @@ Future<void> software() async {
 
   clear();
 
-  print(cyan('${lang(60)} baobab ntfs-3g exfat-utils gparted preload'));
+  cyan('${lang(60)} baobab ntfs-3g exfat-utils gparted preload');
 
   if (stdYesNo()) {
     clear();
@@ -89,10 +86,8 @@ Future<void> software() async {
 
   clear();
 
-  print(
-    cyan('${lang(60)} noto-fonts-emoji ttf-dejavu '
-        'xorg-fonts-misc noto-color-emoji-fontconfig'),
-  );
+  cyan('${lang(60)} noto-fonts-emoji ttf-dejavu '
+      'xorg-fonts-misc noto-color-emoji-fontconfig');
 
   if (stdYesNo()) {
     clear();
@@ -103,7 +98,7 @@ Future<void> software() async {
 
   clear();
 
-  print(cyan('${lang(60)} lshw lsb-release smartmontools sl asciiquarium'));
+  cyan('${lang(60)} lshw lsb-release smartmontools sl asciiquarium');
 
   if (stdYesNo()) {
     clear();
