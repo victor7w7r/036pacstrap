@@ -1,4 +1,4 @@
-import 'dart:io' show exit;
+import 'dart:io' show exit, stdin;
 
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
@@ -31,8 +31,11 @@ Future<String> diskmenu() async {
   }
 
   for (final part in block) {
+    print(part);
     array.add('/dev/$part');
   }
+
+  stdin.readLineSync();
 
   cyan(lang(41));
 

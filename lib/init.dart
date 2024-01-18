@@ -25,7 +25,8 @@ Future<void> init(final List<String> args) async {
 
     if (!Directory('/sys/firmware/efi').existsSync()) error(2);
 
-    if (SysInfo.kernelArchitecture.name != 'x86_64') error(3);
+    if (!(SysInfo.kernelArchitecture.name == 'x86_64' ||
+        SysInfo.kernelArchitecture.name == 'X86_64')) error(3);
 
     await success('pacman').then((final val) {
       if (!val) error(4);
