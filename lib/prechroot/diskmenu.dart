@@ -1,43 +1,24 @@
-import 'dart:io' show exit, stdin;
+import 'dart:io' show exit;
 
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
-Future<String> _allAbsoluteDev(final String dev) => sys('echo $dev '
-    r"| sed 's/^\.\.\/\.\.\//\/dev\//' "
-    r"| sed '/.*[[:alpha:]]$/d' | sed '/blk[[:digit:]]$/d' "
-    r"| sed '/nvme[[:digit:]]n[[:digit:]]$/d'");
+Future<List<String>> _allDevsDisk() =>
+    syssplit('lsblk -o NAME -e 2,3,4,5,6,7,9,10,11 -d ' r"| sed -ne '2,$p'");
 
 Future<String> diskmenu() async {
   clear();
 
-  var count = 0;
+  final parts = await _allDevsDisk();
 
-  final (block, dirtyDevs, array) = (<String>[], <String>[], <String>[]);
+  parts.removeWhere((final part) => part.isEmpty);
 
-  for (final dev in await allDevs()) {
-    dirtyDevs.add(await dirtyDev(dev));
-    count++;
-  }
-
-  dirtyDevs.removeWhere((final dev) => dev == '');
-
-  if (count == 0) {
+  if (parts.isEmpty) {
     lang(11, PrintQuery.normal);
     exit(1);
   }
 
-  for (final dev in dirtyDevs) {
-    if (await _allAbsoluteDev(dev) == '') block.add(await getBlockDev(dev));
-  }
-
-  for (final part in block) {
-    print(part);
-    array.add('/dev/$part');
-  }
-
-  stdin.readLineSync();
-
   cyan(lang(41));
 
-  return chooser(lang(33), array).run();
+  return chooser(lang(33), parts.map((final part) => '/dev/$part').toList())
+      .run();
 }
