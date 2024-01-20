@@ -16,8 +16,13 @@ void initLang() {
     'whiptail is no está disponible, instalando',
     'pacstrap no está disponible, instalando',
     'Todo ok!',
-    'Todas las particiones de este dispositivo están montadas, '
-        'por favor desmonta tu partición de elección',
+    'No existen dispositivos de disco disponibles en tu sistema, saliendo', //11
+    'Número: ',
+
+    'Este dispositivo tiene una tabla de tipo DOS o no está inicializado '
+        '¿Quieres inicializarlo con GPT?',
+    '¡ATENCION!: Tu dispositivo de destino será formateado y vaciado',
+    'Este dispositivo no tiene una partición EFI',
     'Este dispositivo tiene una tabla de tipo DOS (MBR), '
         'este script sólo trabaja con GPT',
     'Elegiste como SSD, pero este dispositivo es rotacional, '
@@ -48,15 +53,13 @@ void initLang() {
     'Número: ',
     'Por favor reinicia y quita tu medio de live',
     'Seleccione su tipo de disco para la instalacion\n',
-    'Disco Duro',
-    'Disco Solido o NVMe',
     'CUIDADO!!!: Tu dispositivo debe estar vacio y formateado, '
         'formatear siempre mata tus datos, POR FAVOR haz una copia antes de continuar',
     'Antes de instalar, se recomienda que tu disco tenga esta tabla de particiones\n',
     'GNU Parted script, es un ejemplo para un disco de 20G',
     'Elige un dispositivo para instalar\n',
-    'Por favor seleccione su partición de raiz',
-    'Por favor seleccione una swap partition',
+    'Por favor seleccione su partición de raiz\n',
+    'Por favor seleccione una swap partition\n',
     'Estas particiones se van a formatear',
     'Presione Enter para continuar...',
     'Por favor escriba su hostname (ej: A036-arch): ',
@@ -64,22 +67,23 @@ void initLang() {
         'algun otro, aquí está la orden \n'
         'ln -sf /usr/share/zoneinfo/REGION/CITY /etc/localtime',
     'Elige tu Locale, si quieres cambiar a otros, revisa el README '
-        'dentro del GitHub de este proyecto',
+        'dentro del GitHub de este proyecto\n',
     'Escribe tu nuevo usuario: ',
-    'Selecciona un GUI, estos son los mas usados, Este script recomienda XFCE',
-    'Elige tu controlador de GPU',
+    'Selecciona un GUI, estos son los mas usados, Este script recomienda XFCE\n',
+    'Elige tu controlador de GPU\n',
     'Si ejecutas como invitado',
     'Mas Sofware!!',
     'Este script tiene un pequeno pack de software, ¿Te gusta',
     'LISTO!!!, Tu PC ya instalo de manera correcta a Arch Linux, '
         'si hubo errores, reportalo en 036bootstrap / GitHub',
     'Elige tu procesador',
-    '¿Te gusta BlackArch? (Repositorio de Penetration Testing para Arch Linux)',
-    '¿Y docker? (Docker es una herramienta de contenedores para Linux)',
-    'Has instalado xfce antes, ¿te gustaría instalar mi template?',
+    '¿Te gusta BlackArch? (Repositorio de Penetration Testing para Arch Linux)\n',
+    '¿Y docker? (Docker es una herramienta de contenedores para Linux)\n',
+    'Has instalado xfce antes, ¿te gustaría instalar mi template?\n',
     '¿Te gustaría instalar esto?',
     'Instalando un entorno de escritorio, hay un servicio que rompe el sistema, '
-        'esto se arreglará eventaulmente, de momento, usa XORG',
+        'esto se arreglará eventualmente, de momento, usa XORG',
+    'Selecciona tu marca de procesador',
   ]);
   setDictEng([
     'Your Operating System is not GNU/Linux, exiting',
@@ -94,7 +98,11 @@ void initLang() {
     'whiptail is not available in this system, installing',
     'pacstrap is not available in this system, installing',
     'All dependencies is ok!',
-    "There's not disks available in your system, please verify!!!",
+    'There are not available disk devices in your system, exiting', //11
+
+    'This device has a DOS Label Type or is not initialized '
+        'Do you want to initialize it with GPT?',
+    'WARNING!: Your destination device would be formatted and empty',
     'The device has a DOS Label Type (MBR), this script only works with GPT',
     'You choose a SSD device, but this device is rotational, '
         'if is that not the case, that device is USB',
@@ -124,36 +132,35 @@ void initLang() {
     'Number: ',
     'Please reboot and remove your live media',
     'Please choose your disk type\n',
-    'Hard Drive Disk',
-    'Solid State Disk or NVMe',
     'DANGER!!!: Your destination device would be formatted and empty, '
         'formatting always cause data loss, PLEASE backup all your data before start',
     'Before installing, we recomend that your disk has the next partition scheme\n',
     'GNU Parted script example for format a 20GB disk',
     'Choose a device for install\n',
-    'Please select a root partition',
-    'Please select a swap partition',
+    'Please select a root partition\n',
+    'Please select a swap partition\n',
     'This partitions will be format',
     'Press Enter to continue...',
     'Please write your hostname (ex: A036-arch): ',
     'America/Guayaquil is the timezone by default, if you want to change, '
         'here is the command \n ln -sf /usr/share/zoneinfo/REGION/CITY /etc/localtime',
     'Choose your locale, if you want to change to other locales, '
-        'check the README of the Github of this project',
+        'check the README of the Github of this project\n',
     'Write your new user: ',
-    'Choose a GUI, these are the common used, this script recommends XFCE',
-    'Choose your GPU drivers',
+    'Choose a GUI, these are the common used, this script recommends XFCE\n',
+    'Choose your GPU drivers\n',
     'If you are executing Arch Linux as a guest',
     'More Sofware!!',
     'This script has a little pack of software, Do you like it',
     'READY!!!, Your PC is succesfully installed with Arch Linux, '
         'if you have errors, please report at 036bootstrap in GitHub',
     'Choose your procesor',
-    'Do you like BlackArch? (Penetration Testing Repository for Arch Linux)',
-    'And Docker? (Docker is a containerization tool for Linux)',
-    'You have installed xfce before, do you want to install my template?',
+    'Do you like BlackArch? (Penetration Testing Repository for Arch Linux)\n',
+    'And Docker? (Docker is a containerization tool for Linux)\n',
+    'You have installed xfce before, do you want to install my template?\n',
     'Do you like to install this?',
     'Installing any Desktop Env, dev service breaks your system, '
-        'this bug will be fixed later, i recommend to use XORG ONLY'
+        'this bug will be fixed later, i recommend to use XORG ONLY',
+    'Select your processor brand',
   ]);
 }

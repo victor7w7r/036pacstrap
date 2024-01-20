@@ -8,11 +8,8 @@ import 'package:pacstrap/prechroot/prechroot.dart';
 
 Future<void> corelive() async {
   clear();
-  diskenv();
-  await disclaimer();
-  await diskverify(await diskmenu());
-  await rootpartmenu();
-  await swapmenu();
+  await diskinit(await diskmenu());
+  await partitioning();
   await diskformat();
   await pacstraper();
   await toggler();
@@ -27,7 +24,6 @@ Future<void> corechroot() async {
   await drivers();
   await aur();
   await blackarch();
-  await docker();
   await fish();
   await swapper();
   if (xfce) await xfcetemplate();

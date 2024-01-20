@@ -8,10 +8,11 @@ import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 import 'package:pacstrap/pacstrap.dart';
 
 Future<void> init(final List<String> args) async {
+  initLang();
+
   if (args.isEmpty) {
     clear();
     setLang();
-    initLang();
     clear();
     cover();
 

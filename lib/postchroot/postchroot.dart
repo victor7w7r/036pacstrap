@@ -1,7 +1,6 @@
 export 'aur.dart';
 export 'blackarch.dart';
 export 'configurator.dart';
-export 'docker.dart';
 export 'drivers.dart';
 export 'finisher.dart';
 export 'fish.dart';
