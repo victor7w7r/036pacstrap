@@ -21,7 +21,7 @@ List<String> _linuxParts(final List<String> partCodes) {
 
 Future<void> _menuPartitioning(
   final String sel,
-  final String partCodes,
+  final List<String> partCodes,
 ) async {
   final efiSize = await sys('export LANG=C; '
       'sudo parted -s $disk unit MiB p '

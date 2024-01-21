@@ -21,7 +21,7 @@ String _swapPart(final List<String> partCodes) {
   return result;
 }
 
-Future<void> diskformat(final String partCodes) async {
+Future<void> diskformat(final List<String> partCodes) async {
   clear();
 
   print(lang(26));
