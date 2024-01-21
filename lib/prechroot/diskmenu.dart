@@ -17,8 +17,8 @@ Future<String> diskmenu() async {
     exit(1);
   }
 
-  cyan(lang(41));
+  cyan(lang(13));
 
-  return chooser(lang(33), parts.map((final part) => '/dev/$part').toList())
+  return chooser(lang(12), parts.map((final part) => '/dev/$part').toList())
       .run();
 }

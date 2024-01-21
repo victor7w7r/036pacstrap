@@ -1,6 +1,6 @@
 import 'dart:async' show unawaited;
 
-import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+import 'package:zerothreesix_dart/zerothreesix_dart.dart' show clear;
 
 import 'package:pacstrap/pacstrap.dart';
 import 'package:pacstrap/postchroot/postchroot.dart';
@@ -10,9 +10,6 @@ Future<void> corelive() async {
   clear();
   await diskinit(await diskmenu());
   await partitioning();
-  await diskformat();
-  await pacstraper();
-  await toggler();
 }
 
 Future<void> corechroot() async {

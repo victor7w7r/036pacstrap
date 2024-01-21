@@ -16,26 +16,26 @@ void initLang() {
     'whiptail is no está disponible, instalando',
     'pacstrap no está disponible, instalando',
     'Todo ok!',
-    'No existen dispositivos de disco disponibles en tu sistema, saliendo', //11
-    'Número: ',
-
+    'No existen dispositivos de disco disponibles en tu sistema, saliendo',
+    'Número: ', //13
+    'Seleccione su dispositivo de destino para la instalación\n',
     'Este dispositivo tiene una tabla de tipo DOS o no está inicializado '
         '¿Quieres inicializarlo con GPT?',
     '¡ATENCION!: Tu dispositivo de destino será formateado y vaciado',
-    'Este dispositivo no tiene una partición EFI',
-    'Este dispositivo tiene una tabla de tipo DOS (MBR), '
-        'este script sólo trabaja con GPT',
-    'Elegiste como SSD, pero este dispositivo es rotacional, '
-        'si no es el caso, entonces este dispositivo es USB',
-    'Elegiste como HDD, pero este dispositivo no es rotational, '
-        'por favor verifica y ejecuta este script otra vez',
-    'Este dispositivo no tiene una partición EFI',
-    'Este dispositivo tiene una partición EFI en otro lado que no sea *1',
-    'No hay discos disponibles en tu sistema, por favor verifica!!!',
-    '=============== FORMATEAR PARTICIONES DE RAIZ E INTERCAMBIO =============== \n',
-    '=============== FORMATEAR PARTICION DE RAIZ =============== \n',
-    '=============== FORMATEAR EFI Y MONTARLO =============== \n',
-    'Particiones desmontadas de manera exitosa',
+    'Creando partición EFI',
+    'Este dispositivo está usando con otras particiones pero no tiene partición EFI, '
+        '¿Quieres crear una partición EFI?',
+    'Existe una partición EFI pero no es está en la posición *1, el dispositivo se tiene que borrar entero, '
+        '¿Quieres continuar?', //18
+    'No existe ninguna partición ext4 o compatible con Linux para instalar, '
+        'puedes particionar manualmente o salir y volver a ejecutar',
+    'Particionar con cgdisk',
+    'Particionar con parted',
+    'Borrar todo el disco',
+    'Salir',
+    'Existen particiones de linux disponibles, recuerda que al seleccionarlo se va a formatear',
+    'Recuerda que al seleccionar una partición o borra el disco al completo, la acción es irreversible',
+    '=============== FORMATEAR PARTICION DE RAIZ Y MONTADO =============== \n', //26
     '=============== PACSTRAP: INSTALAR LA BASE DE LINUX Y PAQUETES CORE  =============== \n',
     'Algo falló en el chroot, no se desmontarán los sistemas de archivos, '
         'así que puedes investigar.',
@@ -98,26 +98,30 @@ void initLang() {
     'whiptail is not available in this system, installing',
     'pacstrap is not available in this system, installing',
     'All dependencies is ok!',
-    'There are not available disk devices in your system, exiting', //11
-
+    'There are not available disk devices in your system, exiting',
+    'Number: ', //13
+    'Choose your destination device for install\n',
     'This device has a DOS Label Type or is not initialized '
         'Do you want to initialize it with GPT?',
     'WARNING!: Your destination device would be formatted and empty',
-    'The device has a DOS Label Type (MBR), this script only works with GPT',
-    'You choose a SSD device, but this device is rotational, '
-        'if is that not the case, that device is USB',
-    'You choose a HDD device, but this device is not rotational, '
-        'please check and run this script again',
-    "The device doesn't have a EFI partition",
-    'The device has the EFI partition in other side than *1',
-    'All the partitions of the device are mounted in your system, '
-        'please unmount the desired partition',
-    '=============== FORMAT ROOT FILESYSTEM AND SWAP =============== \n',
-    '=============== FORMAT ROOT FILESYSTEM =============== \n',
-    '=============== FORMAT EFI AND MOUNT =============== \n',
-    'unmounted filesystems succesfully',
+    'Creating EFI partition',
+    'This device is using with other partitions but not have EFI partition, '
+        'Do you want to create a EFI partition?',
+    'There is a EFI partition but is not in the *1 position, '
+        'the device must be erased, Do you want to continue?',
+    'There is not any ext4 or compatible partition to install, '
+        'you can partition manually or exit and run again',
+    'Partition with cgdisk',
+    'Partition with parted',
+    'Erase all disk',
+    'Exit',
+    'There are linux partitions available, remember that when you select it, '
+        'it will be formatted',
+    'Remember that when you select a partition or erase the disk, '
+        'the action is irreversible',
+    '=============== FORMAT ROOT FILESYSTEM AND MOUNTING =============== \n',
     '=============== PACSTRAP: INSTALL LINUX BASE AND CORE PACKAGES =============== \n',
-    'Something failed inside the chroot, not unmounting filesystems so you can investigate.',
+    'Something failed inside the chroot, not unmounting filesystems so you can investigate.', //28
     'Please umount all partitions, and restart this script',
     '=============== ROOT PASSWORD FOR YOUR SYSTEM =============== \n',
     '=============== CONFIGURE GRUB =============== \n',
@@ -129,7 +133,6 @@ void initLang() {
     '=============== OPTIMIZATIONS =============== \n',
     'We create a script called software.sh in your home directory, '
         'after reboot, use chmod +x at software.sh',
-    'Number: ',
     'Please reboot and remove your live media',
     'Please choose your disk type\n',
     'DANGER!!!: Your destination device would be formatted and empty, '

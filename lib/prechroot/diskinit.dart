@@ -8,23 +8,24 @@ import 'package:pacstrap/pacstrap.dart';
 Future<void> _initGpt(final String device) =>
     call('parted --script $device mklabel gpt');
 
-Future<void> _efiCreate(final String device) async {
+Future<String> _efiCreate(final String device) async {
   await call('parted --script $device mkpart primary fat32 1MiB 200MiB');
   await call('parted --script $device set 1 esp on');
-  await coderes('mkfs.fat -F32 $efipart');
   final efipartquery =
       await syswline('fdisk -l $disk | sed -ne /EFI/p | cut -d " " -f1');
-  efipart = efipartquery;
+  await coderes('mkfs.fat -F32 $efipartquery');
+  return efipartquery;
 }
 
 Future<void> diskinit(final String device) async {
   clear();
 
   if (await sys('blkid -o value -s PTTYPE $device') != 'gpt') {
-    cyan(lang(11));
-    red(lang(12));
+    cyan(lang(14));
+    red(lang(15));
     if (stdYesNo()) {
       await _initGpt(device);
+      clear();
     } else {
       exit(0);
     }
@@ -36,22 +37,37 @@ Future<void> diskinit(final String device) async {
   if (numberPart != '0') await call('sudo umount -f $device*');
 
   if (efi == '' && numberPart == '0') {
-    await _efiCreate(device);
+    cyan(lang(16));
+    efipart = await _efiCreate(device);
+    okMessage();
   } else if (efi == '' && numberPart != '0') {
+    cyan(lang(17));
+    red(lang(15));
     if (stdYesNo()) {
-      await _efiCreate(device);
+      clear();
+      cyan(lang(16));
+      efipart = await _efiCreate(device);
+      okMessage();
     } else {
       exit(0);
     }
   } else if (efi != '' && numberPart != '0') {
     if (await sys("echo $efi | sed -ne '/[[:alpha:]]1/p'") == '') {
+      red(lang(15));
       if (stdYesNo()) {
+        clear();
+        cyan(lang(16));
         await _initGpt(device);
-        await _efiCreate(device);
+        efipart = await _efiCreate(device);
+        okMessage();
       } else {
         exit(0);
       }
+    } else {
+      efipart = efi;
     }
+  } else {
+    efipart = efi;
   }
 
   RegExp('sd[A-Za-z]').hasMatch(device)

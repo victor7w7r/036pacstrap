@@ -61,9 +61,11 @@ Future<void> init(final List<String> args) async {
       }
     });
 
-    await call('pacman -S ncurses wget --noconfirm &> /dev/null');
+    await call(
+      'pacman -S ncurses wget awk gdisk fdisk --noconfirm &> /dev/null',
+    );
 
-    lang(10, PrintQuery.error);
+    lang(10, PrintQuery.normal);
 
     spinAction.cancel();
   } else {

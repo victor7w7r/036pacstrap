@@ -1,54 +1,82 @@
+import 'dart:async' show unawaited;
 import 'dart:io' show exit;
 
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
+import 'package:pacstrap/prechroot/diskformat.dart';
 import 'package:pacstrap/pacstrap.dart';
+
+List<String> _linuxParts(final List<String> partCodes) {
+  var count = 1;
+
+  final result = <String>[];
+
+  for (final code in partCodes) {
+    if (code == '8300') result.add('$disk$count');
+    count++;
+  }
+
+  return result;
+}
+
+Future<void> _menuPartitioning(
+  final String sel,
+  final String partCodes,
+) async {
+  final efiSize = await sys('export LANG=C; '
+      'sudo parted -s $disk unit MiB p '
+      "| awk '{ if (\$3 == \"End\") { flag=1 } if (flag) { print \$3 } }' "
+      "| sed -ne '2p'; "
+      'export LANG= ');
+
+  if (sel == lang(20)) {
+    clear();
+    await coderes('cgdisk $disk');
+    unawaited(partitioning());
+  } else if (sel == lang(21)) {
+    clear();
+    await coderes('parted $disk');
+    unawaited(partitioning());
+  } else if (sel == lang(22)) {
+    await call('parted -s $disk unit MiB mkpart primary '
+        '${diskenvdev == 'SSD' ? 'f2fs' : 'ext4'} $efiSize 100%');
+    rootpart = '${disk}2';
+    unawaited(diskformat(partCodes));
+  } else if (sel == lang(23)) {
+    exit(0);
+  } else {
+    rootpart = sel;
+    unawaited(diskformat(partCodes));
+  }
+}
 
 Future<void> partitioning() async {
   clear();
 
-  //Primero que detecte si hay un ext4 o f2fs
-  //Si no hay que redirija al cgdisk al salir, llamar a la funcion de particionado
-  //Un chooser que nos permita elegir el disco a particionar
-  //De manera inteligente, si es HDD y tiene una particion swap, elegirlo
+  final partCodes = await syssplit('export LANG=C; '
+      'sudo gdisk -l $disk '
+      "| awk '{ if (\$6 == \"Size\") { flag=1 } if (flag) { print \$6 } }' "
+      "| sed '1d'; "
+      'export LANG= ');
 
-  /*
-    var (count, countMount) = (0, 0);
-
-    final (verify, rootParts) = (<String>[], <String>[]);
-
-    final efipartquery =
-        await syswline('fdisk -l $disk | sed -ne /EFI/p | cut -d " " -f1');
-
-    if (RegExp('sd[A-Za-z]').hasMatch(disk)) {
-      verify.addAll(await syssplit("find $disk* | sed '/[[:alpha:]]\$/d'"));
-    } else if (RegExp('mmcblk[0-9_-]').hasMatch(disk)) {
-      verify.addAll(await syssplit("find $disk* | sed '/k[[:digit:]]\$/d'"));
-    } else if (RegExp('nvme[0-9_-]').hasMatch(disk)) {
-      verify.addAll(
-        await syssplit("find $disk* | sed '/e[[:digit:]]n[[:digit:]]\$/d'"),
-      );
-    }
-
-    for (final part in verify) {
-      if (part != efipartquery) {
-        (await sys("lsblk $part | sed -ne '/\\//p'") != '')
-            ? countMount++
-            : rootParts.add(part);
-        count++;
-      }
-    }
-
-    if (countMount == count) {
-      clear();
-      lang(17, PrintQuery.error);
-      exit(1);
-    }
-
-    efipart = efipartquery;
-
-    cyan(lang(42));
-
-    chooser(lang(33), rootParts).map((final sel) => rootpart = sel).run();
-  */
+  if (!partCodes.contains('8300')) {
+    cyan(lang(19));
+    red(lang(26));
+    await chooser(lang(13), [
+      lang(20),
+      lang(21),
+      lang(22),
+      lang(23),
+    ]).map((final sel) => _menuPartitioning(sel, partCodes)).run();
+  } else {
+    cyan(lang(24));
+    red(lang(26));
+    await chooser(lang(13), [
+      ..._linuxParts(partCodes),
+      lang(20),
+      lang(21),
+      lang(22),
+      lang(23),
+    ]).map((final sel) => _menuPartitioning(sel, partCodes)).run();
+  }
 }
