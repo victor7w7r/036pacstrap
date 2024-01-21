@@ -5,7 +5,7 @@ import 'package:pacstrap/pacstrap.dart';
 Future<void> blackarch() async {
   clear();
 
-  cyan(lang(57));
+  cyan(lang(42));
 
   if (stdYesNo()) {
     await coderes('cd; curl -O https://blackarch.org/strap.sh');

@@ -25,7 +25,6 @@ Future<void> corechroot() async {
   await swapper();
   if (xfce) await xfcetemplate();
   await optimizations();
-  await software();
   await finisher();
 }
 

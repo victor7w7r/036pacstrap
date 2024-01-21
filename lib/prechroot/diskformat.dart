@@ -24,7 +24,7 @@ String _swapPart(final List<String> partCodes) {
 Future<void> diskformat(final List<String> partCodes) async {
   clear();
 
-  print(lang(26));
+  print(lang(27));
 
   if (diskenvdev == 'HDD') {
     swappart = _swapPart(partCodes);

@@ -6,9 +6,9 @@ import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 Future<void> newuser() async {
   clear();
-  lang(28, PrintQuery.normal);
+  lang(37, PrintQuery.normal);
 
-  stdout.write(lang(49));
+  stdout.write(lang(38));
 
   final sudouserreq = stdin.readLineSync()!;
 

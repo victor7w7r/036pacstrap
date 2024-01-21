@@ -4,10 +4,10 @@ import 'package:pacstrap/pacstrap.dart';
 
 Future<void> graphical() async {
   clear();
-  await dialog('036 Creative Studios', lang(50), '8', '80');
+  await dialog('036 Creative Studios', lang(39), '8', '80');
   clear();
 
-  cyan(lang(50));
+  cyan(lang(39));
 
   final sel = stdChoose(['XFCE', 'GNOME', 'Plasma', 'XORG', 'NOGUI']);
 

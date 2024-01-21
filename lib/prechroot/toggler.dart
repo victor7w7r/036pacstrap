@@ -14,6 +14,6 @@ Future<void> toggler() async {
     'arch-chroot /mnt ./pacstrap chroot $diskenvdev ${english ? 1 : 0}',
   );
 
-  lang(28, PrintQuery.normal);
+  lang(29, PrintQuery.normal);
   await call('rm -f /mnt/pacstrap &> /dev/null');
 }

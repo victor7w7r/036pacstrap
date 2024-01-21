@@ -7,7 +7,7 @@ import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 Future<void> pacstraper() async {
   clear();
-  lang(27, PrintQuery.normal);
+  lang(28, PrintQuery.normal);
 
   await coderes(
       'pacstrap /mnt base linux linux-firmware linux-headers nano sudo vi '

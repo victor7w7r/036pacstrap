@@ -10,6 +10,6 @@ void header(final String title) =>
 void okMessage() {
   print('');
   print('=============== OK =============== \n');
-  print(lang(45));
+  print(lang(17));
   stdin.readLineSync();
 }

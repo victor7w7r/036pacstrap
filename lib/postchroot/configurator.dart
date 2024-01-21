@@ -4,13 +4,13 @@ import 'package:pacstrap/pacstrap.dart';
 
 Future<void> configurator() async {
   clear();
-  lang(25, PrintQuery.normal);
+  lang(30, PrintQuery.normal);
   await coderes('passwd');
   okMessage();
   clear();
-  cyan(lang(51));
+  cyan(lang(31));
 
-  if (chooser(lang(33), ['Intel', 'AMD']).run() == 'Intel') {
+  if (chooser(lang(12), ['Intel', 'AMD']).run() == 'Intel') {
     clear();
     print('=============== INTEL MICROCODE  =============== \n');
     await coderes('pacman -S intel-ucode --noconfirm');
@@ -24,7 +24,7 @@ Future<void> configurator() async {
 
   clear();
 
-  lang(26, PrintQuery.normal);
+  lang(32, PrintQuery.normal);
 
   await coderes('grub-install --target=x86_64-efi '
       '--efi-directory=/boot/efi --bootloader-id=arch');
@@ -35,7 +35,7 @@ Future<void> configurator() async {
 
   clear();
 
-  lang(27, PrintQuery.normal);
+  lang(33, PrintQuery.normal);
 
   await coderes('systemctl enable NetworkManager');
   await coderes('systemctl enable sshd');

@@ -29,20 +29,21 @@ Future<void> _menuPartitioning(
       "| sed -ne '2p'; "
       'export LANG= ');
 
-  if (sel == lang(20)) {
+  if (sel == lang(21)) {
     clear();
     await coderes('cgdisk $disk');
     unawaited(partitioning());
-  } else if (sel == lang(21)) {
+  } else if (sel == lang(22)) {
     clear();
     await coderes('parted $disk');
     unawaited(partitioning());
-  } else if (sel == lang(22)) {
+  } else if (sel == lang(23)) {
     await call('parted -s $disk unit MiB mkpart primary '
         '${diskenvdev == 'SSD' ? 'f2fs' : 'ext4'} $efiSize 100%');
     rootpart = '${disk}2';
     unawaited(diskformat(partCodes));
-  } else if (sel == lang(23)) {
+  } else if (sel == lang(24)) {
+    clear();
     exit(0);
   } else {
     rootpart = sel;
@@ -60,23 +61,23 @@ Future<void> partitioning() async {
       'export LANG= ');
 
   if (!partCodes.contains('8300')) {
-    cyan(lang(19));
+    cyan(lang(20));
     red(lang(26));
-    await chooser(lang(13), [
-      lang(20),
+    await chooser(lang(12), [
       lang(21),
       lang(22),
       lang(23),
+      lang(24),
     ]).map((final sel) => _menuPartitioning(sel, partCodes)).run();
   } else {
-    cyan(lang(24));
+    cyan(lang(25));
     red(lang(26));
-    await chooser(lang(13), [
+    await chooser(lang(12), [
       ..._linuxParts(partCodes),
-      lang(20),
       lang(21),
       lang(22),
       lang(23),
+      lang(24),
     ]).map((final sel) => _menuPartitioning(sel, partCodes)).run();
   }
 }

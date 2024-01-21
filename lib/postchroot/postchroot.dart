@@ -8,6 +8,5 @@ export 'graphical.dart';
 export 'hostname_locale.dart';
 export 'newuser.dart';
 export 'optimizations.dart';
-export 'software.dart';
 export 'swapper.dart';
 export 'xfcetemplate.dart';

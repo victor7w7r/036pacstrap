@@ -6,7 +6,7 @@ import 'package:pacstrap/messages.dart';
 
 Future<void> aur() async {
   clear();
-  lang(29, PrintQuery.normal);
+  lang(41, PrintQuery.normal);
 
   await coderes(
     'pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com',

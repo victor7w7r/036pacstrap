@@ -6,7 +6,7 @@ import 'package:pacstrap/pacstrap.dart';
 
 Future<void> optimizations() async {
   clear();
-  lang(31, PrintQuery.normal);
+  lang(44, PrintQuery.normal);
 
   await coderes(
     """sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=".*"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=0 nowatchdog"/' /etc/default/grub &> /dev/null""",

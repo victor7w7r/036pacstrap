@@ -7,7 +7,7 @@ import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 Future<void> hostnamer() async {
   clear();
 
-  await readInput(lang(46)).then((final ans) {
+  await readInput(lang(34)).then((final ans) {
     File('/etc/hostname').writeAsStringSync(ans);
     File('/etc/hosts')
         .writeAsStringSync('echo 127.0.1.1 $ans', mode: FileMode.append);
@@ -17,16 +17,16 @@ Future<void> hostnamer() async {
 Future<void> localer() async {
   clear();
 
-  await dialog('036 Creative Studios', lang(47), '9', '50');
+  await dialog('036 Creative Studios', lang(35), '9', '50');
   await call('ln -sf /usr/share/zoneinfo/America/Guayaquil '
       '/etc/localtime');
   await call('hwclock --systohc');
 
   clear();
 
-  cyan(lang(48));
+  cyan(lang(36));
 
-  final sel = chooser(lang(33), ['es_ES', 'en_US']).run();
+  final sel = chooser(lang(12), ['es_ES', 'en_US']).run();
 
   clear();
   await call(

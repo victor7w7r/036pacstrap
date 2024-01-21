@@ -5,7 +5,7 @@ import 'package:pacstrap/pacstrap.dart';
 Future<void> drivers() async {
   clear();
 
-  cyan(lang(51));
+  cyan(lang(40));
 
   final sel = stdChoose(['Intel', 'ATI', 'AMD', 'NVIDIA', 'VMware']);
 

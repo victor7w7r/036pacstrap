@@ -27,6 +27,7 @@ Future<void> diskinit(final String device) async {
       await _initGpt(device);
       clear();
     } else {
+      clear();
       exit(0);
     }
   }
@@ -41,7 +42,7 @@ Future<void> diskinit(final String device) async {
     efipart = await _efiCreate(device);
     okMessage();
   } else if (efi == '' && numberPart != '0') {
-    cyan(lang(17));
+    cyan(lang(18));
     red(lang(15));
     if (stdYesNo()) {
       clear();
@@ -49,10 +50,12 @@ Future<void> diskinit(final String device) async {
       efipart = await _efiCreate(device);
       okMessage();
     } else {
+      clear();
       exit(0);
     }
   } else if (efi != '' && numberPart != '0') {
     if (await sys("echo $efi | sed -ne '/[[:alpha:]]1/p'") == '') {
+      cyan(lang(19));
       red(lang(15));
       if (stdYesNo()) {
         clear();
@@ -61,6 +64,7 @@ Future<void> diskinit(final String device) async {
         efipart = await _efiCreate(device);
         okMessage();
       } else {
+        clear();
         exit(0);
       }
     } else {
