@@ -12,7 +12,9 @@ List<String> _linuxParts(final List<String> partCodes) {
   final result = <String>[];
 
   for (final code in partCodes) {
-    if (code == '8300') result.add('$disk$count');
+    if (code == '8300') {
+      result.add(disk.contains('nvme') ? '${disk}p$count' : '$disk$count');
+    }
     count++;
   }
 
@@ -40,7 +42,7 @@ Future<void> _menuPartitioning(
   } else if (sel == lang(23)) {
     await call('parted -s $disk unit MiB mkpart primary '
         '${diskenvdev == 'SSD' ? 'f2fs' : 'ext4'} $efiSize 100%');
-    rootpart = '${disk}2';
+    rootpart = disk.contains('nvme') ? '${disk}p2' : '${disk}2';
     unawaited(diskformat(partCodes));
   } else if (sel == lang(24)) {
     clear();

@@ -19,7 +19,9 @@ Future<void> fish() async {
   clear();
   await call("sudo -u $sudouser bash -c 'chsh -s /bin/fish'");
   await call('chsh -s /bin/fish');
-  await coderes('git clone https://github.com/victor7w7r/dotfiles /root');
+  await coderes(
+    'git clone https://github.com/victor7w7r/dotfiles /root/dotfiles',
+  );
   await call('cp -r /root/dotfiles/fish /root/.config/fish');
   await call('cp -r /root/dotfiles/fish /home/$sudouser/.config/fish');
   await call('chown -R $sudouser:$sudouser /home/$sudouser/.config/fish');
