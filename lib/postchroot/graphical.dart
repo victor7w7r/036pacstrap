@@ -18,8 +18,8 @@ Future<void> graphical() async {
     await coderes(
         'pacman -S xfce4 xfce4-goodies gtk-engines gtk-engine-murrine '
         'xdg-user-dirs gvfs network-manager-applet '
-        'volumeicon firefox lightdm grub-customizer --noconfirm');
-    await coderes('systemctl enable lightdm.service');
+        'volumeicon firefox gdm grub-customizer --noconfirm');
+    await coderes('systemctl enable gdm.service');
     okMessage();
     xfce = true;
   } else if (sel == 'GNOME') {

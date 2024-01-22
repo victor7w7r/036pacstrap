@@ -22,9 +22,11 @@ Future<void> fish() async {
   await coderes(
     'git clone https://github.com/victor7w7r/dotfiles /root/dotfiles',
   );
+  await call('mkdir /root/.config');
+  await call('mkdir /home/$sudouser/.config');
   await call('cp -r /root/dotfiles/fish /root/.config/fish');
   await call('cp -r /root/dotfiles/fish /home/$sudouser/.config/fish');
+  await call('chown -R $sudouser:$sudouser /home/$sudouser/.config');
   await call('chown -R $sudouser:$sudouser /home/$sudouser/.config/fish');
-
   okMessage();
 }
