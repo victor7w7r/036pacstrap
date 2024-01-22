@@ -8,7 +8,8 @@ Future<void> xfcetemplate() async {
   cyan(lang(43));
 
   if (stdYesNo()) {
-    await coderes('pacman -S catppuccin-gtk-theme-mocha --noconfirm');
+    await coderes('pacman -S catppuccin-gtk-theme-mocha papirus-icon-theme '
+        'ttf-ubuntu-font-family --noconfirm');
     await call('cp -r /root/dotfiles/xfce4 /root/.config/xfce4');
     await call('cp -r /root/dotfiles/xfce4 /home/$sudouser/.config/xfce4');
     await call('cp -r /root/dotfiles/gtk-3.0 /root/.config/gtk-3.0');

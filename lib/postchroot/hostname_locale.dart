@@ -34,7 +34,7 @@ Future<void> localer() async {
   );
   await coderes('locale-gen');
   unawaited(
-    File('/etc/hostname').writeAsString(
+    File('/etc/locale.conf').writeAsString(
       'LANG="$sel.UTF-8"\nLC_TIME="$sel.UTF-8"\nLANGUAGE="$sel:$sel:es"\n',
     ),
   );
