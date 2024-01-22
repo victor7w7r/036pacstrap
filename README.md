@@ -1,52 +1,29 @@
 # 036pacstrap
 
-Bootstrap Scripts for Arch Linux
+Bootstrap App for Arch Linux
 
 ![Alt text](brandwhite.png?raw=true "Title")
 
-- :bulb: **Features for bootstrap scripts**
+- :bulb: **Features**
   - [Liquorix Kernel](https://liquorix.net/): Best kernel for x86_64
   - [yay](https://github.com/Jguer/yay): AUR Helper (Only Arch Linux)
-  - [OhMyZsh](https://ohmyz.sh/): Best Framework for zsh
+  - [Fish, OhMyFish](https://github.com/oh-my-fish/oh-my-fish): FISH Shell and Plugins
   - XFCE, GNOME, KDE menu options for install
   - You can install has a VMware Guest
   - INTEL, NVIDIA, ATI, AMD menu options for install
-  - Docker and Blackarch Repository
+  - Blackarch Repository
   - Some Optimizations
-  - Extra Software
 
 - :warning: **Only Works in x86_64 Processors, UEFI Systems and GPT Disks**
   - MBR systems is not compatible here
 
-- :warning: **These scripts use f2fs filesystem for SSD/NVMe devices**
+- :warning: **This use f2fs filesystem for SSD/NVMe devices**
   - Is the best filesystem for Linux and friendly for NAND like devices
 
 ## Prerequisites of use
 
-- Basic or medium understanding of GNU/Linux
+- Medium understanding of GNU/Linux
 - For reading the code, understanding of Dart
-
-- :warning: **Make a partition table before**
-  - You would get some errors like EFI missing partition, etc. For example this GNU parted scripts for partitioning works well
-
-```bash
-#HDD 20 GB
-parted --script /dev/sda \
-    mklabel gpt \
-    mkpart primary fat32 1MiB 200MiB \
-    set 1 esp on \
-    mkpart primary ext4 200MiB 19.0GiB \
-    mkpart primary linux-swap 19.0GiB 100% \
-    print
-
-#SSD 20 GB
-parted --script /dev/sda \
-    mklabel gpt \
-    mkpart primary fat32 1MiB 200MiB \
-    set 1 esp on \
-    primary f2fs 200MiB 100% \
-    print
-```
 
 ## Run, Run?, Run!
 
@@ -87,7 +64,7 @@ $ pacman -S dart-sdk #Archlinux
 $ brew -S dart-sdk #macOS
 ```
 
-- Choose your flavour lang and initialize the packages
+- Initialize the packages
 
 ```bash
 # Dart
@@ -95,7 +72,7 @@ $ cd 036pacstrap
 $ dart pub get
 ```
 
-- Run your favourite app
+- Run the app
 
 ```bash
 # Dart
@@ -114,5 +91,5 @@ $ dart compile exe pacstrap.dart -o 036pacstrap
 ## Development Suite
 
 - Editor: [vscode](https://code.visualstudio.com/)
-- Lint and Syntax Check: [Pylance](https://marketplace.visualstudio.com/,items?itemName=ms-python.vscode-pylance), [Go](https://code.visualstudio.com/docs/languages/go), [Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code)
+- Lint and Syntax Check: [Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code)
 - Operating Systems for tests: [Arch Linux](https://archlinux.org/)
