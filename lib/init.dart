@@ -20,22 +20,24 @@ Future<void> init(final List<String> args) async {
 
     if (!Platform.isLinux) error(0);
 
-    await checkUid().then((final val) {
-      if (!val) error(1);
-    });
+    await checkUid().then((final val) => onlyIf(!val, () => error(1)));
 
-    if (!Directory('/sys/firmware/efi').existsSync()) error(2);
+    onlyIf(!Directory('/sys/firmware/efi').existsSync(), () => error(2));
 
-    if (!(SysInfo.kernelArchitecture.name == 'x86_64' ||
-        SysInfo.kernelArchitecture.name == 'X86_64')) error(3);
+    onlyIf(
+      !(SysInfo.kernelArchitecture.name == 'x86_64' ||
+          SysInfo.kernelArchitecture.name == 'X86_64'),
+      () => error(3),
+    );
 
-    await success('pacman').then((final val) {
-      if (!val) error(4);
-    });
+    await success('pacman').then((final val) => onlyIf(!val, () => error(4)));
 
-    await InternetConnectionChecker().hasConnection.then((final iin) {
-      if (!iin) error(5);
-    });
+    await InternetConnectionChecker().hasConnection.then(
+          (final iin) => onlyIf(
+            !iin,
+            () => error(5),
+          ),
+        );
 
     lang(6, PrintQuery.normal);
     await call('pacman -Sy &> /dev/null');

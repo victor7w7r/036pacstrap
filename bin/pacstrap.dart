@@ -1,6 +1,6 @@
 import 'dart:async' show unawaited;
 
-import 'package:zerothreesix_dart/zerothreesix_dart.dart' show clear;
+import 'package:zerothreesix_dart/zerothreesix_dart.dart' show clear, onlyIf;
 
 import 'package:pacstrap/pacstrap.dart';
 import 'package:pacstrap/postchroot/postchroot.dart';
@@ -31,9 +31,7 @@ Future<void> corechroot() async {
 void main(final List<String> args) async {
   await init(args);
 
-  if (args.isEmpty) {
-    unawaited(corelive());
-  } else {
-    if (args[0] == 'chroot') unawaited(corechroot());
-  }
+  args.isEmpty
+      ? unawaited(corelive())
+      : unawaited(onlyIf(args[0] == 'chroot', corechroot));
 }
