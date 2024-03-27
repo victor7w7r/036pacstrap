@@ -60,7 +60,7 @@ locale-gen
 - Install your sdks
 
 ```bash
-$ pacman -S dart-sdk #Archlinux
+$ pacman -S dart #Archlinux
 $ brew -S dart-sdk #macOS
 ```
 
