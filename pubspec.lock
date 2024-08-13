@@ -890,9 +890,9 @@ packages:
     dependency: "direct main"
     description:
       name: zerothreesix_dart
-      sha256: b9939ef05f54cbbb160a7ab228bc672c326b5652c9b3fb5613b4fa29675caf2a
+      sha256: "52847273007622b3d03c5de06b1e611d8a8911d5b6de8676e7769cd4b865c700"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.6"
+    version: "0.1.7"
 sdks:
   dart: ">=3.5.0 <4.0.0"

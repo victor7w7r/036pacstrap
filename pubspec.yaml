@@ -6,14 +6,14 @@ environment:
   sdk: '>=3.5.0 <4.0.0'
 
 dependencies:
-  cli_menu: ^0.4.0
+  cli_menu: ^0.4.0+1
   console: ^4.1.0
   fpdart: ^1.1.0
   get_it: ^7.7.0
   injectable: ^2.4.4
   internet_connection_checker: ^1.0.0+1
   system_info2: ^4.0.0
-  zerothreesix_dart: ^0.1.6
+  zerothreesix_dart: ^0.1.7
 
 dependency_overrides:
   win32: 5.5.3
