@@ -30,6 +30,7 @@ class Init {
 
     if (args.isEmpty) {
       _io.clear();
+      _initLang();
       _lang.assignLang();
       _io.clear();
       cover();
