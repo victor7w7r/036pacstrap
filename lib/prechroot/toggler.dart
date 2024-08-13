@@ -1,19 +1,30 @@
 import 'dart:io' show Directory;
 
+import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
 
-Future<void> toggler() async {
-  clear();
-  header('CHROOT');
+@injectable
+class Toggler {
+  const Toggler(this._io, this._lang, this._messages, this._var);
 
-  await call('cp ${Directory.current.path}/pacstrap /mnt/pacstrap');
-  await call('chmod +x /mnt/pacstrap');
-  await coderes(
-    'arch-chroot /mnt ./pacstrap chroot $diskenvdev ${english ? 1 : 0}',
-  );
+  final InputOutput _io;
+  final Lang _lang;
+  final Messages _messages;
+  final Variables _var;
 
-  lang(29, PrintQuery.normal);
-  await call('rm -f /mnt/pacstrap &> /dev/null');
+  Future<void> call() async {
+    _io.clear();
+    _messages.header('CHROOT');
+
+    await _io.call('cp ${Directory.current.path}/pacstrap /mnt/pacstrap');
+    await _io.call('chmod +x /mnt/pacstrap');
+    await _io.coderes(
+      'arch-chroot /mnt ./pacstrap chroot ${_var.diskenvdev} ${_lang.isEnglish ? 1 : 0}',
+    );
+
+    _lang.write(29, PrintQuery.normal);
+    await _io.call('rm -f /mnt/pacstrap &> /dev/null');
+  }
 }

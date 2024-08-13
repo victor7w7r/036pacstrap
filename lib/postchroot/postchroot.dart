@@ -1,5 +1,6 @@
 export 'aur.dart';
 export 'blackarch.dart';
+export 'brew.dart';
 export 'configurator.dart';
 export 'drivers.dart';
 export 'finisher.dart';

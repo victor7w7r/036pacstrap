@@ -5,7 +5,6 @@ Bootstrap App for Arch Linux
 ![Alt text](brandwhite.png?raw=true "Title")
 
 - :bulb: **Features**
-  - [Liquorix Kernel](https://liquorix.net/): Best kernel for x86_64
   - [yay](https://github.com/Jguer/yay): AUR Helper (Only Arch Linux)
   - [Fish, OhMyFish](https://github.com/oh-my-fish/oh-my-fish): FISH Shell and Plugins
   - XFCE, GNOME, KDE menu options for install
@@ -16,9 +15,6 @@ Bootstrap App for Arch Linux
 
 - :warning: **Only Works in x86_64 Processors, UEFI Systems and GPT Disks**
   - MBR systems is not compatible here
-
-- :warning: **This use f2fs filesystem for SSD/NVMe devices**
-  - Is the best filesystem for Linux and friendly for NAND like devices
 
 ## Prerequisites of use
 

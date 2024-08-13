@@ -1,77 +1,104 @@
 import 'dart:io' show Directory, Platform;
 
-import 'package:internet_connection_checker/internet_connection_checker.dart'
-    show InternetConnectionChecker;
+import 'package:injectable/injectable.dart' show injectable;
 import 'package:system_info2/system_info2.dart' show SysInfo;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
 
-Future<void> init(final List<String> args) async {
-  initLang();
+import 'package:internet_connection_checker/internet_connection_checker.dart'
+    show InternetConnectionChecker;
 
-  if (args.isEmpty) {
-    clear();
-    setLang();
-    clear();
-    cover();
+@injectable
+class Init {
+  const Init(
+    this._initLang,
+    this._io,
+    this._lang,
+    this._tui,
+    this._var,
+  );
 
-    final spinAction = spin();
+  final InitLang _initLang;
+  final InputOutput _io;
+  final Lang _lang;
+  final Tui _tui;
+  final Variables _var;
 
-    if (!Platform.isLinux) error(0);
+  Future<void> call(final List<String> args) async {
+    _initLang();
 
-    await checkUid().then((final val) => onlyIf(!val, () => error(1)));
+    if (args.isEmpty) {
+      _io.clear();
+      _lang.assignLang();
+      _io.clear();
+      cover();
 
-    onlyIf(!Directory('/sys/firmware/efi').existsSync(), () => error(2));
+      final spinAction = _tui.spin();
 
-    onlyIf(
-      !(SysInfo.kernelArchitecture.name == 'x86_64' ||
-          SysInfo.kernelArchitecture.name == 'X86_64'),
-      () => error(3),
-    );
+      if (!Platform.isLinux) _lang.error(0);
 
-    await success('pacman').then((final val) => onlyIf(!val, () => error(4)));
+      await _io
+          .checkUid()
+          .then((final val) => onlyIf(!val, () => _lang.error(1)));
 
-    await InternetConnectionChecker().hasConnection.then(
-          (final iin) => onlyIf(
-            !iin,
-            () => error(5),
-          ),
-        );
+      onlyIf(
+        !Directory('/sys/firmware/efi').existsSync(),
+        () => _lang.error(2),
+      );
 
-    lang(6, PrintQuery.normal);
-    await call('pacman -Sy &> /dev/null');
+      onlyIf(
+        !(SysInfo.kernelArchitecture.name == 'x86_64' ||
+            SysInfo.kernelArchitecture.name == 'X86_64'),
+        () => _lang.error(3),
+      );
 
-    await success('fsck.f2fs').then((final val) async {
-      if (!val) {
-        lang(7, PrintQuery.normal);
-        await call('pacman -S f2fs-tools --noconfirm &> /dev/null');
-      }
-    });
+      await _io
+          .success('pacman')
+          .then((final val) => onlyIf(!val, () => _lang.error(4)));
 
-    await success('whiptail').then((final val) async {
-      if (!val) {
-        lang(8, PrintQuery.normal);
-        await call('pacman -S whiptail --noconfirm &> /dev/null');
-      }
-    });
+      await InternetConnectionChecker().hasConnection.then(
+            (final iin) => onlyIf(
+              !iin,
+              () => _lang.error(5),
+            ),
+          );
 
-    await success('pacstrap').then((final val) async {
-      if (!val) {
-        lang(9, PrintQuery.normal);
-        await call('pacman -S arch-install-scripts --noconfirm &> /dev/null');
-      }
-    });
+      _lang.write(6, PrintQuery.normal);
+      await _io.call('pacman -Sy &> /dev/null');
 
-    await call(
-      'pacman -S ncurses wget awk gdisk fdisk --noconfirm &> /dev/null',
-    );
+      await _io.success('fsck.btrfs').then((final val) async {
+        if (!val) {
+          _lang.write(7, PrintQuery.normal);
+          await _io.call('pacman -S btrfs-progs --noconfirm &> /dev/null');
+        }
+      });
 
-    lang(10, PrintQuery.normal);
+      await _io.success('whiptail').then((final val) async {
+        if (!val) {
+          _lang.write(8, PrintQuery.normal);
+          await _io.call('pacman -S whiptail --noconfirm &> /dev/null');
+        }
+      });
 
-    spinAction.cancel();
-  } else {
-    diskenvdev = args[1];
-    english = args[2] == '1';
+      await _io.success('pacstrap').then((final val) async {
+        if (!val) {
+          _lang.write(9, PrintQuery.normal);
+          await _io
+              .call('pacman -S arch-install-scripts --noconfirm &> /dev/null');
+        }
+      });
+
+      await _io.call(
+        'pacman -S ncurses wget awk gdisk fdisk --noconfirm &> /dev/null',
+      );
+
+      _lang.write(10, PrintQuery.normal);
+
+      spinAction.cancel();
+    } else {
+      _var.diskenvdev = args[1];
+      _lang.isEnglish = args[2] == '1';
+    }
   }
 }

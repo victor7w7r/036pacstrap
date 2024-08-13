@@ -1,85 +1,106 @@
 import 'dart:async' show unawaited;
 import 'dart:io' show exit;
 
+import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
-import 'package:pacstrap/prechroot/diskformat.dart';
 import 'package:pacstrap/pacstrap.dart';
+import 'package:pacstrap/prechroot/diskformat.dart';
 
-List<String> _linuxParts(final List<String> partCodes) {
-  var count = 1;
+@injectable
+class Partitioning {
+  const Partitioning(
+    this._attach,
+    this._colorize,
+    this._diskformat,
+    this._io,
+    this._lang,
+    this._variables,
+  );
 
-  final result = <String>[];
+  final Attach _attach;
+  final Colorize _colorize;
+  final Diskformat _diskformat;
+  final InputOutput _io;
+  final Lang _lang;
+  final Variables _variables;
 
-  for (final code in partCodes) {
-    if (code == '8300') {
-      result.add(disk.contains('nvme') ? '${disk}p$count' : '$disk$count');
+  List<String> _linuxParts(final List<String> partCodes) {
+    var count = 1;
+
+    final result = <String>[];
+
+    for (final code in partCodes) {
+      if (code == '8300') {
+        result.add(
+          _variables.disk.contains('nvme')
+              ? '${_variables.disk}p$count'
+              : '${_variables.disk}$count',
+        );
+      }
+      count++;
     }
-    count++;
+
+    return result;
   }
 
-  return result;
-}
+  Future<void> _menuPartitioning(
+    final String sel,
+    final List<String> partCodes,
+  ) async {
+    final efiSize = await _io.sys('export LANG=C; '
+        'sudo parted -s ${_variables.disk} unit MiB p '
+        "| awk '{ if (\$3 == \"End\") { flag=1 } if (flag) { print \$3 } }' "
+        "| sed -ne '2p'; "
+        'export LANG= ');
 
-Future<void> _menuPartitioning(
-  final String sel,
-  final List<String> partCodes,
-) async {
-  final efiSize = await sys('export LANG=C; '
-      'sudo parted -s $disk unit MiB p '
-      "| awk '{ if (\$3 == \"End\") { flag=1 } if (flag) { print \$3 } }' "
-      "| sed -ne '2p'; "
-      'export LANG= ');
-
-  if (sel == lang(21)) {
-    clear();
-    await coderes('cgdisk $disk');
-    unawaited(partitioning());
-  } else if (sel == lang(22)) {
-    clear();
-    await coderes('parted $disk');
-    unawaited(partitioning());
-  } else if (sel == lang(23)) {
-    await call('parted -s $disk unit MiB mkpart primary '
-        '${diskenvdev == 'SSD' ? 'f2fs' : 'ext4'} $efiSize 100%');
-    rootpart = disk.contains('nvme') ? '${disk}p2' : '${disk}2';
-    unawaited(diskformat(partCodes));
-  } else if (sel == lang(24)) {
-    clear();
-    exit(0);
-  } else {
-    rootpart = sel;
-    unawaited(diskformat(partCodes));
+    if (sel == _lang.write(21)) {
+      _io.clear();
+      await _io.coderes('cgdisk ${_variables.disk}');
+      unawaited(call());
+    } else if (sel == _lang.write(22)) {
+      _io.clear();
+      await _io.coderes('parted ${_variables.disk}');
+      unawaited(call());
+    } else if (sel == _lang.write(23)) {
+      await _io.call('parted -s ${_variables.disk} unit MiB mkpart primary '
+          'btrfs $efiSize 100%');
+      _variables.rootpart = _variables.disk.contains('nvme')
+          ? '${_variables.disk}p2'
+          : '${_variables.disk}2';
+      unawaited(_diskformat(partCodes));
+    } else if (sel == _lang.write(24)) {
+      _io.clear();
+      exit(0);
+    } else {
+      _variables.rootpart = sel;
+      unawaited(_diskformat(partCodes));
+    }
   }
-}
 
-Future<void> partitioning() async {
-  clear();
+  Future<void> call() async {
+    _io.clear();
 
-  final partCodes = await syssplit('export LANG=C; '
-      'sudo gdisk -l $disk '
-      "| awk '{ if (\$6 == \"Size\") { flag=1 } if (flag) { print \$6 } }' "
-      "| sed '1d'; "
-      'export LANG= ');
+    final partCodes = await _io.syssplit('export LANG=C; '
+        'sudo gdisk -l ${_variables.disk} '
+        "| awk '{ if (\$6 == \"Size\") { flag=1 } if (flag) { print \$6 } }' "
+        "| sed '1d'; "
+        'export LANG= ');
 
-  if (!partCodes.contains('8300')) {
-    cyan(lang(20));
-    red(lang(26));
-    await chooser(lang(12), [
-      lang(21),
-      lang(22),
-      lang(23),
-      lang(24),
-    ]).map((final sel) => _menuPartitioning(sel, partCodes)).run();
-  } else {
-    cyan(lang(25));
-    red(lang(26));
-    await chooser(lang(12), [
-      ..._linuxParts(partCodes),
-      lang(21),
-      lang(22),
-      lang(23),
-      lang(24),
-    ]).map((final sel) => _menuPartitioning(sel, partCodes)).run();
+    _colorize
+      ..cyan(_lang.write(partCodes.contains('8300') ? 25 : 20))
+      ..red(_lang.write(26));
+    print(_lang.write(12));
+
+    await _menuPartitioning(
+      _attach.chooser([
+        if (partCodes.contains('8300')) ..._linuxParts(partCodes),
+        _lang.write(21),
+        _lang.write(22),
+        _lang.write(23),
+        _lang.write(24),
+      ]),
+      partCodes,
+    );
   }
 }

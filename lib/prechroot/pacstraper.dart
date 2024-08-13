@@ -1,22 +1,34 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:async' show unawaited;
 
-import 'package:pacstrap/pacstrap.dart';
-import 'package:pacstrap/prechroot/prechroot.dart';
-
+import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
-Future<void> pacstraper() async {
-  clear();
-  lang(28, PrintQuery.normal);
+import 'package:pacstrap/pacstrap.dart';
+import 'package:pacstrap/prechroot/toggler.dart';
 
-  await coderes(
-      'pacstrap /mnt base linux linux-firmware linux-headers nano sudo vi '
-      'neovim git wget grub efibootmgr os-prober rsync networkmanager neofetch '
-      'f2fs-tools base-devel openssh arch-install-scripts screen unrar p7zip '
-      'fish dosfstools python');
-  await call('genfstab -U /mnt >> /mnt/etc/fstab');
+@injectable
+class Pacstraper {
+  const Pacstraper(this._io, this._lang, this._messages, this._toggler);
 
-  okMessage();
+  final InputOutput _io;
+  final Lang _lang;
+  final Messages _messages;
+  final Toggler _toggler;
 
-  unawaited(toggler());
+  Future<void> call() async {
+    _io.clear();
+    _lang.write(28, PrintQuery.normal);
+
+    await _io.coderes(
+        'pacstrap /mnt base linux linux-firmware linux-headers nano sudo '
+        'neovim git wget grub efibootmgr os-prober rsync networkmanager neofetch '
+        'base-devel openssh arch-install-scripts screen p7zip fish dosfstools');
+    await _io.call('genfstab -U /mnt >> /mnt/etc/fstab');
+
+    _messages.okMessage();
+
+    unawaited(_toggler());
+  }
 }

@@ -1,8 +1,12 @@
-String diskenvdev = '';
-String disk = '';
-String efipart = '';
-String rootpart = '';
-String swappart = '';
+import 'package:injectable/injectable.dart' show singleton;
 
-bool xfce = false;
-String sudouser = '';
+@singleton
+class Variables {
+  String disk = '';
+  String diskenvdev = '';
+  String efipart = '';
+  String rootpart = '';
+  String sudouser = '';
+  String swappart = '';
+  bool xfce = false;
+}

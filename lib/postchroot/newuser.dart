@@ -1,26 +1,43 @@
-import 'dart:io' show stdin, stdout;
+import 'package:injectable/injectable.dart' show injectable;
+import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
 
-import 'package:zerothreesix_dart/zerothreesix_dart.dart';
-
-Future<void> newuser() async {
-  clear();
-  lang(37, PrintQuery.normal);
-
-  stdout.write(lang(38));
-
-  final sudouserreq = stdin.readLineSync()!;
-
-  await coderes('useradd --create-home $sudouserreq');
-  await coderes('passwd $sudouserreq');
-  await call('usermod -aG wheel,storage,power $sudouserreq');
-  await call(
-    r"sed -i 's/^#.*%wheel ALL=(ALL) ALL$/%wheel ALL=(ALL) ALL/' /etc/sudoers &> /dev/null",
+@injectable
+class Newuser {
+  const Newuser(
+    this._attach,
+    this._io,
+    this._lang,
+    this._messages,
+    this._variables,
   );
-  await call('echo "$sudouserreq ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers');
 
-  okMessage();
+  final Attach _attach;
+  final InputOutput _io;
+  final Lang _lang;
+  final Messages _messages;
+  final Variables _variables;
 
-  sudouser = sudouserreq;
+  Future<void> call() async {
+    _io.clear();
+    _lang.write(37, PrintQuery.normal);
+
+    print(_lang.write(38));
+
+    final sudouserreq = _attach.readSync();
+
+    await _io.coderes('useradd --create-home $sudouserreq');
+    await _io.coderes('passwd $sudouserreq');
+    await _io.call('usermod -aG wheel,storage,power $sudouserreq');
+    await _io.call(
+      r"sed -i 's/^#.*%wheel ALL=(ALL) ALL$/%wheel ALL=(ALL) ALL/' /etc/sudoers &> /dev/null",
+    );
+    await _io
+        .call('echo "$sudouserreq ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers');
+
+    _messages.okMessage();
+
+    _variables.sudouser = sudouserreq;
+  }
 }
