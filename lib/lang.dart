@@ -35,7 +35,7 @@ class InitLang {
           '¿Quieres crear una partición EFI?\n',
       'Existe una partición EFI pero no es está en la posición *1, el dispositivo se tiene que borrar entero, '
           '¿Quieres continuar?\n',
-      'No existe ninguna partición ext4 o compatible con Linux para instalar, '
+      'No existe ninguna partición btrfs o compatible con Linux para instalar, '
           'puedes particionar manualmente o salir y volver a ejecutar\n',
       'Particionar con cgdisk',
       'Particionar con parted',
@@ -96,7 +96,7 @@ class InitLang {
           'Do you want to create a EFI partition?\n',
       'There is a EFI partition but is not in the *1 position, '
           'the device must be erased, Do you want to continue?\n',
-      'There is not any ext4 or compatible partition to install, '
+      'There is not any btrfs or compatible partition to install, '
           'you can partition manually or exit and run again\n',
       'Partition with cgdisk',
       'Partition with parted',

@@ -13,7 +13,7 @@ dependencies:
   injectable: ^2.4.4
   internet_connection_checker: ^1.0.0+1
   system_info2: ^4.0.0
-  zerothreesix_dart: ^0.1.7
+  zerothreesix_dart: ^0.1.8
 
 dependency_overrides:
   win32: 5.5.3
