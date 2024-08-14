@@ -22,7 +22,7 @@ class Pacstraper {
     _lang.write(28, PrintQuery.normal);
 
     await _io.coderes(
-        'pacstrap /mnt base linux linux-firmware linux-headers nano sudo '
+        'pacstrap /mnt base linux linux-firmware linux-headers nano sudo gcc '
         'neovim git wget grub efibootmgr os-prober rsync networkmanager neofetch '
         'base-devel openssh arch-install-scripts screen p7zip fish dosfstools');
     await _io.call('genfstab -U /mnt >> /mnt/etc/fstab');

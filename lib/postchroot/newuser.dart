@@ -23,7 +23,7 @@ class Newuser {
     _io.clear();
     _lang
       ..write(37, PrintQuery.normal)
-      ..write(38, PrintQuery.normal);
+      ..write(38, PrintQuery.inline);
 
     final sudouserreq = _attach.readSync();
 
