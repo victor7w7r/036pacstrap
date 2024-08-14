@@ -21,9 +21,9 @@ class Newuser {
 
   Future<void> call() async {
     _io.clear();
-    _lang.write(37, PrintQuery.normal);
-
-    print(_lang.write(38));
+    _lang
+      ..write(37, PrintQuery.normal)
+      ..write(38, PrintQuery.normal);
 
     final sudouserreq = _attach.readSync();
 
