@@ -1,14 +1,13 @@
-import 'dart:io' show File, FileMode;
-
 import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
-import 'package:pacstrap/messages.dart';
+import 'package:pacstrap/pacstrap.dart';
 
 @injectable
 class Aur {
-  const Aur(this._lang, this._io, this._messages);
+  const Aur(this._attach, this._lang, this._io, this._messages);
 
+  final Attach _attach;
   final InputOutput _io;
   final Lang _lang;
   final Messages _messages;
@@ -26,9 +25,9 @@ class Aur {
         "'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm");
     await _io
         .call("sed -i \"/\\[multilib\\]/,/Include/\"'s/^//' /etc/pacman.conf");
-    File('/etc/pacman.conf').writeAsStringSync(
+    _attach.appendFile(
+      '/etc/pacman.conf',
       '[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n',
-      mode: FileMode.append,
     );
 
     await _io.coderes('pacman -Syyu yay pamac-aur rate-mirrors --noconfirm');

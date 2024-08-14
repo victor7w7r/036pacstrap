@@ -1,14 +1,19 @@
-import 'dart:async' show unawaited;
-import 'dart:io' show File, FileMode;
-
-import 'package:console/console.dart' show readInput;
 import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
+import 'package:pacstrap/attach.dart';
+
 @injectable
 class HostnameLocale {
-  const HostnameLocale(this._colorize, this._io, this._lang, this._tui);
+  const HostnameLocale(
+    this._attach,
+    this._colorize,
+    this._io,
+    this._lang,
+    this._tui,
+  );
 
+  final Attach _attach;
   final Colorize _colorize;
   final InputOutput _io;
   final Lang _lang;
@@ -17,11 +22,11 @@ class HostnameLocale {
   Future<void> hostnamer() async {
     _io.clear();
 
-    await readInput(_lang.write(34)).then((final ans) {
-      File('/etc/hostname').writeAsStringSync(ans);
-      File('/etc/hosts')
-          .writeAsStringSync('echo 127.0.1.1 $ans', mode: FileMode.append);
-    });
+    await _attach.readInputSync(_lang.write(34)).then(
+          (final ans) => _attach
+            ..writeFile('/etc/hostname', ans)
+            ..appendFile('/etc/hosts', 'echo 127.0.1.1 $ans'),
+        );
   }
 
   Future<void> localer() async {
@@ -43,10 +48,10 @@ class HostnameLocale {
       "sed -i 's/^#$sel.UTF-8 UTF-8/$sel.UTF-8 UTF-8/' /etc/locale.gen &> /dev/null",
     );
     await _io.coderes('locale-gen');
-    unawaited(
-      File('/etc/locale.conf').writeAsString(
-        'LANG="$sel.UTF-8"\nLC_TIME="$sel.UTF-8"\nLANGUAGE="$sel:$sel:es"\n',
-      ),
+
+    _attach.writeFile(
+      '/etc/locale.conf',
+      'LANG="$sel.UTF-8"\nLC_TIME="$sel.UTF-8"\nLANGUAGE="$sel:$sel:es"\n',
     );
   }
 }

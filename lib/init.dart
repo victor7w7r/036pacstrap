@@ -1,17 +1,12 @@
-import 'dart:io' show Directory, Platform;
-
 import 'package:injectable/injectable.dart' show injectable;
-import 'package:system_info2/system_info2.dart' show SysInfo;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 import 'package:pacstrap/pacstrap.dart';
 
-import 'package:internet_connection_checker/internet_connection_checker.dart'
-    show InternetConnectionChecker;
-
 @injectable
 class Init {
   const Init(
+    this._attach,
     this._initLang,
     this._io,
     this._lang,
@@ -19,6 +14,7 @@ class Init {
     this._var,
   );
 
+  final Attach _attach;
   final InitLang _initLang;
   final InputOutput _io;
   final Lang _lang;
@@ -37,28 +33,24 @@ class Init {
 
       final spinAction = _tui.spin();
 
-      if (!Platform.isLinux) _lang.error(0);
+      if (!_attach.isLinux) _lang.error(0);
 
       await _io
           .checkUid()
           .then((final val) => onlyIf(!val, () => _lang.error(1)));
 
       onlyIf(
-        !Directory('/sys/firmware/efi').existsSync(),
+        !_attach.dirExists('/sys/firmware/efi'),
         () => _lang.error(2),
       );
 
-      onlyIf(
-        !(SysInfo.kernelArchitecture.name == 'x86_64' ||
-            SysInfo.kernelArchitecture.name == 'X86_64'),
-        () => _lang.error(3),
-      );
+      onlyIf(!_attach.isx64, () => _lang.error(3));
 
       await _io
           .success('pacman')
           .then((final val) => onlyIf(!val, () => _lang.error(4)));
 
-      await InternetConnectionChecker().hasConnection.then(
+      await _attach.internetCheck().then(
             (final iin) => onlyIf(
               !iin,
               () => _lang.error(5),

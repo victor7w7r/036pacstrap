@@ -1,5 +1,4 @@
 import 'dart:async' show unawaited;
-import 'dart:io' show exit;
 
 import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
@@ -71,7 +70,7 @@ class Partitioning {
       unawaited(_diskformat(partCodes));
     } else if (sel == _lang.write(24)) {
       _io.clear();
-      exit(0);
+      _attach.successExit();
     } else {
       _variables.rootpart = sel;
       unawaited(_diskformat(partCodes));

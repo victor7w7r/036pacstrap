@@ -1,5 +1,3 @@
-import 'dart:io' show File, FileMode;
-
 import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart' show InputOutput;
 
@@ -7,8 +5,9 @@ import 'package:pacstrap/pacstrap.dart';
 
 @injectable
 class Swapper {
-  const Swapper(this._io, this._messages, this._variables);
+  const Swapper(this._attach, this._io, this._messages, this._variables);
 
+  final Attach _attach;
   final InputOutput _io;
   final Messages _messages;
   final Variables _variables;
@@ -18,8 +17,7 @@ class Swapper {
     _messages.header('SWAPPING');
 
     if (_variables.diskenvdev == 'HDD') {
-      File('/etc/sysctl.d/99-sysctl.conf')
-          .writeAsStringSync('vm.swappiness=60', mode: FileMode.append);
+      _attach.appendFile('/etc/sysctl.d/99-sysctl.conf', 'vm.swappiness=60');
     } else {
       await _io.coderes(
         "sudo -u ${_variables.sudouser} bash -c 'cd; git clone https://aur.archlinux.org/zramswap.git'",

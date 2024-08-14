@@ -1,12 +1,13 @@
-import 'dart:io' show stdin;
-
 import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
+import 'package:pacstrap/attach.dart';
+
 @injectable
 class Messages {
-  const Messages(this._colorize, this._lang);
+  const Messages(this._attach, this._colorize, this._lang);
 
+  final Attach _attach;
   final Colorize _colorize;
   final Lang _lang;
 
@@ -20,6 +21,6 @@ class Messages {
     print('');
     print('=============== OK =============== \n');
     print(_lang.write(17));
-    stdin.readLineSync();
+    _attach.readSync();
   }
 }

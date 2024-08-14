@@ -1,5 +1,3 @@
-import 'dart:io' show File;
-
 import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
@@ -7,8 +5,9 @@ import 'package:pacstrap/pacstrap.dart';
 
 @injectable
 class Optimizations {
-  const Optimizations(this._io, this._lang, this._messages);
+  const Optimizations(this._attach, this._io, this._lang, this._messages);
 
+  final Attach _attach;
   final InputOutput _io;
   final Lang _lang;
   final Messages _messages;
@@ -23,10 +22,11 @@ class Optimizations {
     await _io.coderes('grub-mkconfig -o /boot/grub/grub.cfg');
     await _io.call('touch /etc/modprobe.d/blacklists.conf');
 
-    File('/etc/modprobe.d/blacklists.conf').writeAsStringSync(
+    _attach.writeFile(
+      '/etc/modprobe.d/blacklists.conf',
       'blacklist iTCO_wdt\n'
-      'blacklist joydev\n'
-      'blacklist mousedev\nblacklist mac_hid',
+          'blacklist joydev\n'
+          'blacklist mousedev\nblacklist mac_hid',
     );
 
     _messages.okMessage();

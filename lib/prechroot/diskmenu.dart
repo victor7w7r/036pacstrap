@@ -1,5 +1,3 @@
-import 'dart:io' show exit;
-
 import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
@@ -26,7 +24,7 @@ class DiskMenu {
 
     if (parts.isEmpty) {
       _lang.write(11, PrintQuery.normal);
-      exit(1);
+      _attach.errorExit();
     }
 
     _colorize.cyan(_lang.write(13));

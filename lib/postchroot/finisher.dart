@@ -1,12 +1,12 @@
-import 'dart:io' show exit;
-
 import 'package:injectable/injectable.dart' show injectable;
+import 'package:pacstrap/pacstrap.dart';
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
 
 @injectable
 class Finisher {
-  const Finisher(this._io, this._lang, this._tui);
+  const Finisher(this._attach, this._io, this._lang, this._tui);
 
+  final Attach _attach;
   final InputOutput _io;
   final Lang _lang;
   final Tui _tui;
@@ -16,6 +16,6 @@ class Finisher {
     await _tui.dialog('036 Creative Studios', _lang.write(45), '8', '80');
     _io.clear();
     _lang.write(46, PrintQuery.normal);
-    exit(0);
+    _attach.successExit();
   }
 }

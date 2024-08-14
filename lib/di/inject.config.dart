@@ -52,14 +52,74 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.singleton<_i400.Variables>(() => _i400.Variables());
+    gh.factory<_i750.Attach>(() => _i750.Attach(gh<_i717.Lang>()));
+    gh.factory<_i921.InitLang>(() => _i921.InitLang(gh<_i717.Lang>()));
     gh.factory<_i582.Messages>(() => _i582.Messages(
+          gh<_i750.Attach>(),
           gh<_i717.Colorize>(),
           gh<_i717.Lang>(),
         ));
-    gh.factory<_i836.Finisher>(() => _i836.Finisher(
+    gh.factory<_i867.Swapper>(() => _i867.Swapper(
+          gh<_i338.Attach>(),
+          gh<_i717.InputOutput>(),
+          gh<_i338.Messages>(),
+          gh<_i338.Variables>(),
+        ));
+    gh.factory<_i671.DiskMenu>(() => _i671.DiskMenu(
+          gh<_i338.Attach>(),
+          gh<_i717.Colorize>(),
+          gh<_i717.InputOutput>(),
+          gh<_i717.Lang>(),
+        ));
+    gh.factory<_i944.Toggler>(() => _i944.Toggler(
+          gh<_i338.Attach>(),
+          gh<_i717.InputOutput>(),
+          gh<_i717.Lang>(),
+          gh<_i338.Messages>(),
+          gh<_i338.Variables>(),
+        ));
+    gh.factory<_i952.HostnameLocale>(() => _i952.HostnameLocale(
+          gh<_i750.Attach>(),
+          gh<_i717.Colorize>(),
           gh<_i717.InputOutput>(),
           gh<_i717.Lang>(),
           gh<_i717.Tui>(),
+        ));
+    gh.factory<_i836.Finisher>(() => _i836.Finisher(
+          gh<_i338.Attach>(),
+          gh<_i717.InputOutput>(),
+          gh<_i717.Lang>(),
+          gh<_i717.Tui>(),
+        ));
+    gh.factory<_i877.Aur>(() => _i877.Aur(
+          gh<_i338.Attach>(),
+          gh<_i717.Lang>(),
+          gh<_i717.InputOutput>(),
+          gh<_i338.Messages>(),
+        ));
+    gh.factory<_i325.Xfcetemplate>(() => _i325.Xfcetemplate(
+          gh<_i338.Attach>(),
+          gh<_i717.Colorize>(),
+          gh<_i717.InputOutput>(),
+          gh<_i717.Lang>(),
+          gh<_i338.Messages>(),
+          gh<_i338.Variables>(),
+        ));
+    gh.factory<_i248.DiskInit>(() => _i248.DiskInit(
+          gh<_i338.Attach>(),
+          gh<_i717.Colorize>(),
+          gh<_i717.InputOutput>(),
+          gh<_i717.Lang>(),
+          gh<_i338.Messages>(),
+          gh<_i338.Variables>(),
+        ));
+    gh.factory<_i423.Init>(() => _i423.Init(
+          gh<_i338.Attach>(),
+          gh<_i338.InitLang>(),
+          gh<_i717.InputOutput>(),
+          gh<_i717.Lang>(),
+          gh<_i717.Tui>(),
+          gh<_i338.Variables>(),
         ));
     gh.factory<_i16.Brew>(() => _i16.Brew(
           gh<_i717.InputOutput>(),
@@ -67,20 +127,25 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i338.Messages>(),
           gh<_i338.Variables>(),
         ));
+    gh.factory<_i629.Optimizations>(() => _i629.Optimizations(
+          gh<_i338.Attach>(),
+          gh<_i717.InputOutput>(),
+          gh<_i717.Lang>(),
+          gh<_i338.Messages>(),
+        ));
+    gh.factory<_i31.Graphical>(() => _i31.Graphical(
+          gh<_i338.Attach>(),
+          gh<_i717.Colorize>(),
+          gh<_i717.InputOutput>(),
+          gh<_i717.Lang>(),
+          gh<_i338.Messages>(),
+          gh<_i717.Tui>(),
+          gh<_i338.Variables>(),
+        ));
     gh.factory<_i267.Fish>(() => _i267.Fish(
           gh<_i717.InputOutput>(),
           gh<_i338.Messages>(),
           gh<_i338.Variables>(),
-        ));
-    gh.factory<_i867.Swapper>(() => _i867.Swapper(
-          gh<_i717.InputOutput>(),
-          gh<_i338.Messages>(),
-          gh<_i338.Variables>(),
-        ));
-    gh.factory<_i629.Optimizations>(() => _i629.Optimizations(
-          gh<_i717.InputOutput>(),
-          gh<_i717.Lang>(),
-          gh<_i338.Messages>(),
         ));
     gh.factory<_i929.Configurator>(() => _i929.Configurator(
           gh<_i717.Colorize>(),
@@ -88,24 +153,11 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i717.Lang>(),
           gh<_i338.Messages>(),
         ));
-    gh.factory<_i952.HostnameLocale>(() => _i952.HostnameLocale(
-          gh<_i717.Colorize>(),
-          gh<_i717.InputOutput>(),
-          gh<_i717.Lang>(),
-          gh<_i717.Tui>(),
-        ));
-    gh.factory<_i877.Aur>(() => _i877.Aur(
-          gh<_i717.Lang>(),
-          gh<_i717.InputOutput>(),
-          gh<_i582.Messages>(),
-        ));
-    gh.factory<_i921.InitLang>(() => _i921.InitLang(gh<_i717.Lang>()));
-    gh.factory<_i750.Attach>(() => _i750.Attach(gh<_i717.Lang>()));
-    gh.factory<_i944.Toggler>(() => _i944.Toggler(
+    gh.factory<_i418.Pacstraper>(() => _i418.Pacstraper(
           gh<_i717.InputOutput>(),
           gh<_i717.Lang>(),
           gh<_i338.Messages>(),
-          gh<_i338.Variables>(),
+          gh<_i944.Toggler>(),
         ));
     gh.factory<_i274.Newuser>(() => _i274.Newuser(
           gh<_i338.Attach>(),
@@ -127,50 +179,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i717.InputOutput>(),
           gh<_i717.Lang>(),
           gh<_i338.Messages>(),
-        ));
-    gh.factory<_i671.DiskMenu>(() => _i671.DiskMenu(
-          gh<_i338.Attach>(),
-          gh<_i717.Colorize>(),
-          gh<_i717.InputOutput>(),
-          gh<_i717.Lang>(),
-        ));
-    gh.factory<_i325.Xfcetemplate>(() => _i325.Xfcetemplate(
-          gh<_i338.Attach>(),
-          gh<_i717.Colorize>(),
-          gh<_i717.InputOutput>(),
-          gh<_i717.Lang>(),
-          gh<_i338.Messages>(),
-          gh<_i338.Variables>(),
-        ));
-    gh.factory<_i248.DiskInit>(() => _i248.DiskInit(
-          gh<_i338.Attach>(),
-          gh<_i717.Colorize>(),
-          gh<_i717.InputOutput>(),
-          gh<_i717.Lang>(),
-          gh<_i338.Messages>(),
-          gh<_i338.Variables>(),
-        ));
-    gh.factory<_i31.Graphical>(() => _i31.Graphical(
-          gh<_i338.Attach>(),
-          gh<_i717.Colorize>(),
-          gh<_i717.InputOutput>(),
-          gh<_i717.Lang>(),
-          gh<_i338.Messages>(),
-          gh<_i717.Tui>(),
-          gh<_i338.Variables>(),
-        ));
-    gh.factory<_i423.Init>(() => _i423.Init(
-          gh<_i338.InitLang>(),
-          gh<_i717.InputOutput>(),
-          gh<_i717.Lang>(),
-          gh<_i717.Tui>(),
-          gh<_i338.Variables>(),
-        ));
-    gh.factory<_i418.Pacstraper>(() => _i418.Pacstraper(
-          gh<_i717.InputOutput>(),
-          gh<_i717.Lang>(),
-          gh<_i338.Messages>(),
-          gh<_i944.Toggler>(),
         ));
     gh.factory<_i661.Diskformat>(() => _i661.Diskformat(
           gh<_i717.InputOutput>(),

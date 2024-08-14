@@ -1,5 +1,3 @@
-import 'dart:io' show exit;
-
 import 'package:fpdart/fpdart.dart' show Task;
 import 'package:injectable/injectable.dart' show injectable;
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
@@ -50,7 +48,7 @@ class DiskInit {
         _io.clear();
       } else {
         _io.clear();
-        exit(0);
+        _attach.successExit();
       }
     }
 
@@ -75,7 +73,7 @@ class DiskInit {
         _messages.okMessage();
       } else {
         _io.clear();
-        exit(0);
+        _attach.successExit();
       }
     } else if (efi != '' && numberPart != '0') {
       if (await _io.sys("echo $efi | sed -ne '/[[:alpha:]]1/p'") == '') {
@@ -90,7 +88,7 @@ class DiskInit {
           _messages.okMessage();
         } else {
           _io.clear();
-          exit(0);
+          _attach.successExit();
         }
       } else {
         _variables.efipart = efi;
