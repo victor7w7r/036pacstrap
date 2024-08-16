@@ -1,9 +1,10 @@
 import 'dart:async' show Timer;
 
 import 'package:mocktail/mocktail.dart';
-import 'package:pacstrap/pacstrap.dart';
 import 'package:test/test.dart';
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
+import 'package:pacstrap/pacstrap.dart';
 
 final class MockAttach extends Mock implements Attach {}
 

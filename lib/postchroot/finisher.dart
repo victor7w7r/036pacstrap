@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart' show injectable;
-import 'package:pacstrap/pacstrap.dart';
 import 'package:zerothreesix_dart/zerothreesix_dart.dart';
+
+import 'package:pacstrap/pacstrap.dart';
 
 @injectable
 class Finisher {

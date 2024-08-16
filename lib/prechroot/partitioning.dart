@@ -45,8 +45,9 @@ class Partitioning {
 
   Future<void> _menuPartitioning(
     final String sel,
-    final List<String> partCodes,
-  ) async {
+    final List<String> partCodes, [
+    final bool isTesting = false,
+  ]) async {
     final efiSize = await _io.sys('export LANG=C; '
         'sudo parted -s ${_variables.disk} unit MiB p '
         "| awk '{ if (\$3 == \"End\") { flag=1 } if (flag) { print \$3 } }' "
@@ -56,10 +57,12 @@ class Partitioning {
     if (sel == _lang.write(21)) {
       _io.clear();
       await _io.coderes('cgdisk ${_variables.disk}');
+      if (isTesting) return;
       unawaited(call());
     } else if (sel == _lang.write(22)) {
       _io.clear();
       await _io.coderes('parted ${_variables.disk}');
+      if (isTesting) return;
       unawaited(call());
     } else if (sel == _lang.write(23)) {
       await _io.call('parted -s ${_variables.disk} unit MiB mkpart primary '
@@ -77,7 +80,7 @@ class Partitioning {
     }
   }
 
-  Future<void> call() async {
+  Future<void> call([final bool isTesting = false]) async {
     _io.clear();
 
     final partCodes = await _io.syssplit('export LANG=C; '
@@ -100,6 +103,7 @@ class Partitioning {
         _lang.write(24),
       ]),
       partCodes,
+      isTesting,
     );
   }
 }

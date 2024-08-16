@@ -8,8 +8,11 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:zerothreesix_dart/zerothreesix_dart.dart' as _i717;
+
 import 'package:pacstrap/app.dart' as _i523;
 import 'package:pacstrap/attach.dart' as _i750;
 import 'package:pacstrap/init.dart' as _i423;
@@ -38,7 +41,6 @@ import 'package:pacstrap/prechroot/partitioning.dart' as _i599;
 import 'package:pacstrap/prechroot/prechroot.dart' as _i620;
 import 'package:pacstrap/prechroot/toggler.dart' as _i944;
 import 'package:pacstrap/variables.dart' as _i400;
-import 'package:zerothreesix_dart/zerothreesix_dart.dart' as _i717;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
